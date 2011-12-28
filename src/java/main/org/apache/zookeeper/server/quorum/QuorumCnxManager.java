@@ -155,6 +155,7 @@ public class QuorumCnxManager {
 
         // Starts listener thread that waits for connection requests 
         listener = new Listener();
+        listener.setName("QuorumPeerListener");
     }
 
     /**
