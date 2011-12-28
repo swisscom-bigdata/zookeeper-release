@@ -176,8 +176,8 @@ public class Leader {
             return forwardingFollowers.contains(peer);
         }        
     }
-    
-    ServerSocket ss;
+
+    private final ServerSocket ss;
 
     Leader(QuorumPeer self,LeaderZooKeeperServer zk) throws IOException {
         this.self = self;
@@ -199,7 +199,7 @@ public class Leader {
             }
             throw e;
         }
-        this.zk=zk;
+        this.zk = zk;
     }
 
     /**
@@ -374,6 +374,7 @@ public class Leader {
             // Start thread that waits for connection requests from 
             // new followers.
             cnxAcceptor = new LearnerCnxAcceptor();
+            cnxAcceptor.setName("LearnerCnxAcceptor-" + ss.getLocalSocketAddress());
             cnxAcceptor.start();
             
             readyToStart = true;
