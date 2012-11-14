@@ -1417,6 +1417,9 @@
           <batchtest todir="${test.log.dir}" if="fulltest">
             <fileset dir="${test.src.dir}">
               <include name="**/*${test.category}Test.java"/>
+              <exclude name="**/${test.exclude}.java" if="test.exclude" />
+              <!-- NettyServerCnxnFactory has issues under windows, disable tests for now-->
+              <exclude name="**/NioNetty*.java" if="isWindows" />
             </fileset>
           </batchtest>
           <batchtest todir="${test.log.dir}" if="testcase">
