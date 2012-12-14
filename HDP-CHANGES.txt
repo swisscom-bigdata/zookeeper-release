@@ -1,0 +1,4 @@
+Created the bimota-3.4.5 branch from tags/release-3.4.5-rc1@1405704 13f79535-47bb-0310-9956-ffa450edef68
+
+Bimota-1.2.0:-
+  ZOOKEEPER-1598 - Ability to support more digits in the version string.
