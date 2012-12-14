@@ -116,7 +116,7 @@ public class VerGen {
     public static Version parseVersionString(String input) {
         Version result = new Version();
 
-        Pattern p = Pattern.compile("^(\\d+).(\\d+).(\\d+).(\\d+)(-(.+))?$");
+        Pattern p = Pattern.compile("^(\\d+).(\\d+).(\\d+)(-(.+))?$");
         Matcher m = p.matcher(input);
 
         if (!m.matches()) {
