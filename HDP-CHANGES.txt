@@ -1,16 +1,31 @@
 Created the condor-3.4.5 branch from tags/release-3.4.5-rc1@1405704
 13f79535-47bb-0310-9956-ffa450edef68
 
-INCOMPATIBLE CHANGES
+CONDOR:
+   INCOMPATIBLE CHANGES
 
 
-NEW FEATURES
+   NEW FEATURES
 
 
-IMPROVEMENTS
+   IMPROVEMENTS
 
 
-BUG FIXES
-ZOOKEEPER-1598 - Ability to support more digits in the version string.
-ZOOKEEPER-1584 - Adding mvn-install target for deploying the zookeeper
-                 artifacts to .m2 repository.
+   BUG FIXES
+       ZOOKEEPER-1598 - Ability to support more digits in the version string.
+       ZOOKEEPER-1584 - Adding mvn-install target for deploying the zookeeper
+                        artifacts to .m2 repository.
+
+
+
+COMANCHE:
+   INCOMPATIBLE CHANGES
+
+
+   NEW FEATURES
+
+
+   IMPROVEMENTS
+
+
+   BUG FIXES
