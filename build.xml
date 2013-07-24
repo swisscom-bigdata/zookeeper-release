@@ -1325,7 +1325,7 @@ xmlns:maven="antlib:org.apache.maven.artifact.ant">
       -->
 
     <target name="create-cppunit-configure" depends="check-cppunit-configure"
-            if="need.cppunit.configure">
+            if="need.cppunit.configure" unless="isWindows">
       <exec executable="autoreconf" dir="${c.src.dir}" searchpath="yes"
             failonerror="yes">
         <arg value="-if"/>
@@ -1347,7 +1347,7 @@ xmlns:maven="antlib:org.apache.maven.artifact.ant">
     	</exec>
     </target>
 
-    <target name="call-test-cppunit" description="to execute cppunit tests">
+    <target name="call-test-cppunit" description="to execute cppunit tests" unless="isWindows">
 	<antcall target="create-cppunit-makefile"/>
 	<antcall target="test-cppunit">
 		<param name="cppunit" value="true"/>
