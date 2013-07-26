@@ -15,8 +15,9 @@ CONDOR:
        ZOOKEEPER-1598 - Ability to support more digits in the version string.
        ZOOKEEPER-1584 - Adding mvn-install target for deploying the zookeeper
                         artifacts to .m2 repository.
-
-
+       BUG-7371(ZOOKEEPER-1696) - Receiving Error when using Weblogic client 
+                                  with zookeeper: No Configuration was registered 
+                                  that can handle the configuration named Client
 
 COMANCHE:
    INCOMPATIBLE CHANGES
