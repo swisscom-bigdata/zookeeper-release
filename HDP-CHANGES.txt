@@ -1,31 +1,12 @@
-Created the condor-3.4.5 branch from tags/release-3.4.5-rc1@1405704
-13f79535-47bb-0310-9956-ffa450edef68
+Created the git@github.com:hortonworks/zookeeper.git @ bigwheel-GA-3.4.5 branch from bigwheel-beta2-3.4.5 (SHA1 6bf4545776262f82c530a6431fb2e10daeb16b71)
 
-CONDOR:
-   INCOMPATIBLE CHANGES
+INCOMPATIBLE CHANGES
 
 
-   NEW FEATURES
+NEW FEATURES
 
 
-   IMPROVEMENTS
+IMPROVEMENTS
 
 
-   BUG FIXES
-       ZOOKEEPER-1598 - Ability to support more digits in the version string.
-       ZOOKEEPER-1584 - Adding mvn-install target for deploying the zookeeper
-                        artifacts to .m2 repository.
-
-
-
-COMANCHE:
-   INCOMPATIBLE CHANGES
-
-
-   NEW FEATURES
-
-
-   IMPROVEMENTS
-
-
-   BUG FIXES
+BUG FIXES
