@@ -127,6 +127,9 @@ BUGFIXES:
   ZOOKEEPER-1496. Ephemeral node not getting cleared even after client has
   exited (Rakesh R via mahadev)
 
+  ZOOKEEPER-1751. ClientCnxn#run could miss the second ping or connection get
+  dropped before a ping. (Jeffrey Zhong via mahadev)
+
 IMPROVEMENTS:
 
   ZOOKEEPER-1389. it would be nice if start-foreground used exec $JAVA
