@@ -45,7 +45,7 @@ function Install(
     [Parameter( Position=1, Mandatory=$true )]
     $nodeInstallRoot,
     [System.Management.Automation.PSCredential]
-    [Parameter( Position=2, Mandatory=$true )]
+    [Parameter( Position=2, Mandatory=$false )]
     $serviceCredential,
     [String]
     [Parameter( Position=3, Mandatory=$false )]
@@ -82,11 +82,27 @@ function Install(
             }
             ### else configure zkServer
 
-            CreateAndConfigureHadoopService $service $HDP_RESOURCES_DIR $zookeeperInstallToBin $serviceCredential
+            CreateAndConfigureService $service $HDP_RESOURCES_DIR $zookeeperInstallToBin $serviceCredential
 
             Write-Log "Creating service config ${zookeeperInstallToBin}\$service.xml"
             $cmd = "$zookeeperInstallToBin\zkServer.cmd --service $service catservicexml > `"$zookeeperInstallToBin\$service.xml`""
             Invoke-CmdChk $cmd
+
+            ###
+            ### Grant zk server access to $zookeeperInstallToDir
+            ###
+            if ( $serviceCredential -ne $null )
+            {
+                $username = $serviceCredential.UserName
+                Write-Log "Giving full permissions on `"$zookeeperInstallToDir`" to user `"$username`""
+                GiveFullPermissions $zookeeperInstallToDir $username
+            }
+            else
+            {
+                $serviceId = "NT SERVICE\$service"
+                Write-Log "Giving full permissions on `"$zookeeperInstallToDir`" to service `"$serviceId`""
+                GiveFullPermissions $zookeeperInstallToDir """$serviceId"""
+            }
         }
 
         ### Configure the default log locations
@@ -299,7 +315,7 @@ function Configure(
     [Parameter( Position=1, Mandatory=$true )]
     $nodeInstallRoot,
     [System.Management.Automation.PSCredential]
-    [Parameter( Position=2, Mandatory=$true )]
+    [Parameter( Position=2, Mandatory=$false )]
     $serviceCredential,
     [hashtable]
     [parameter( Position=3 )]
@@ -455,12 +471,10 @@ function InstallBinaries(
     [Parameter( Position=0, Mandatory=$true )]
     $nodeInstallRoot,
     [System.Management.Automation.PSCredential]
-    [Parameter( Position=1, Mandatory=$true )]
+    [Parameter( Position=1, Mandatory=$false )]
     $serviceCredential
     )
 {
-    $username = $serviceCredential.UserName
-
     $HDP_INSTALL_PATH, $HDP_RESOURCES_DIR = Initialize-InstallationEnv $scriptDir "$FinalName.winpkg.log"
 
     ### $zookeeperInstallDir: the directory that contains the application, after unzipping
@@ -528,11 +542,6 @@ function InstallBinaries(
     Invoke-Cmd $xcopy_cmd
 
     ###
-    ### Grant Hadoop user access to $zookeeperInstallToDir
-    ###
-    GiveFullPermissions $zookeeperInstallToDir $username
-
-    ###
     ### ACL Zookeeper logs directory such that machine users can write to it
     ###
     if( -not (Test-Path "$zookeeperLogsDir"))
@@ -587,8 +596,32 @@ function CheckRole(
     }
 }
 
-### Creates and configures the service.
-function CreateAndConfigureHadoopService(
+function CreateAndConfigureService(
+    [String]
+    [Parameter( Position=0, Mandatory=$true )]
+    $service,
+    [String]
+    [Parameter( Position=1, Mandatory=$true )]
+    $hdpResourcesDir,
+    [String]
+    [Parameter( Position=2, Mandatory=$true )]
+    $serviceBinDir,
+    [System.Management.Automation.PSCredential]
+    [Parameter( Position=3, Mandatory=$false )]
+    $serviceCredential
+)
+{
+    if ( $serviceCredential -eq $null )
+    {
+        CreateAndConfigureServiceAsVirtualAccount $service $hdpResourcesDir $serviceBinDir
+    }
+    else
+    {
+        CreateAndConfigureServiceAsUserAccount $service $hdpResourcesDir $serviceBinDir $serviceCredential
+    }
+}
+
+function CreateAndConfigureServiceAsUserAccount(
     [String]
     [Parameter( Position=0, Mandatory=$true )]
     $service,
@@ -617,10 +650,80 @@ function CreateAndConfigureHadoopService(
         }
 
         Write-Log "Adding service $service"
-        $s = New-Service -Name "$service" -BinaryPathName "$serviceBinDir\$service.exe" -Credential $serviceCredential -DisplayName "Apache Hadoop $service"
-        if ( $s -eq $null )
+        if ($serviceCredential.Password.get_Length() -ne 0)
         {
-            throw "CreateAndConfigureHadoopService: Service `"$service`" creation failed"
+            $s = New-Service -Name "$service" -BinaryPathName "$serviceBinDir\$service.exe" -Credential $serviceCredential -DisplayName "Apache Hadoop $service"
+            if ( $s -eq $null )
+            {
+                throw "CreateAndConfigureServiceAsUserAccount: Service `"$service`" creation failed"
+            }
+        }
+        else
+        {
+            # Separately handle case when password is not provided
+            # this path is used for creating services that run under (AD) Managed Service Account
+            # for them password is not provided and in that case service cannot be created using New-Service commandlet
+            $serviceUserName = $serviceCredential.UserName
+            $cmd="$ENV:WINDIR\system32\sc.exe create `"$service`" binPath= `"$serviceBinDir\$service.exe`" obj= $serviceUserName DisplayName= `"Apache Hadoop $service`" "
+            try
+            {
+                Invoke-CmdChk $cmd
+            }
+            catch
+            {
+                throw "CreateAndConfigureServiceAsUserAccount: Service `"$service`" creation failed"
+            }
+        }
+
+        $cmd="$ENV:WINDIR\system32\sc.exe failure $service reset= 30 actions= restart/5000"
+        Invoke-CmdChk $cmd
+
+        $cmd="$ENV:WINDIR\system32\sc.exe config $service start= demand"
+        Invoke-CmdChk $cmd
+
+        Set-ServiceAcl $service
+    }
+    else
+    {
+        Write-Log "Service `"$service`" already exists, skipping service creation"
+    }
+}
+
+function CreateAndConfigureServiceAsVirtualAccount(
+    [String]
+    [Parameter( Position=0, Mandatory=$true )]
+    $service,
+    [String]
+    [Parameter( Position=1, Mandatory=$true )]
+    $hdpResourcesDir,
+    [String]
+    [Parameter( Position=2, Mandatory=$true )]
+    $serviceBinDir
+)
+{
+    if ( -not ( Get-Service "$service" -ErrorAction SilentlyContinue ) )
+    {
+        Write-Log "Creating service `"$service`" as $serviceBinDir\$service.exe"
+        $xcopyServiceHost_cmd = "copy /Y `"$hdpResourcesDir\serviceHost.exe`" `"$serviceBinDir\$service.exe`""
+        Invoke-CmdChk $xcopyServiceHost_cmd
+
+        #HadoopServiceHost.exe will write to this log but does not create it
+        #Creating the event log needs to be done from an elevated process, so we do it here
+        if( -not ([Diagnostics.EventLog]::SourceExists( "$service" )))
+        {
+            [Diagnostics.EventLog]::CreateEventSource( "$service", "" )
+        }
+
+        Write-Log "Adding service $service"
+
+        $cmd="$ENV:WINDIR\system32\sc.exe create `"$service`" binPath= `"$serviceBinDir\$service.exe`" obj= `"NT SERVICE\$service`" DisplayName= `"Apache Hadoop $service`" " 
+        try
+        {
+            Invoke-CmdChk $cmd
+        }
+        catch
+        {
+            throw "CreateAndConfigureServiceAsVirtualAccount: Service `"$service`" creation failed"
         }
 
         $cmd="$ENV:WINDIR\system32\sc.exe failure $service reset= 30 actions= restart/5000"
