@@ -61,3 +61,17 @@ if not defined ZK_CLIENT_HEAP (
   set ZK_CLIENT_HEAP=256
 )
 set CLIENT_JVMFLAGS=-Xmx%ZK_CLIENT_HEAP%m %CLIENT_JVMFLAGS%
+
+@REM setup java environment variables
+
+if not defined JAVA_HOME (
+  echo Error: JAVA_HOME is not set.
+  goto :eof
+)
+
+if not exist %JAVA_HOME%\bin\java.exe (
+  echo Error: JAVA_HOME is incorrectly set.
+  goto :eof
+)
+
+set JAVA=%JAVA_HOME%\bin\java
