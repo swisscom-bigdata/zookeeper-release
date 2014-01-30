@@ -59,7 +59,10 @@ function Main( $scriptDir )
     if ("$ENV:IS_ZOOKEEPER" -eq "yes") {
         $zookeeperRole = "zkServer"
     }
-
+    else
+    {
+        $zookeeperRole = "zkCli"
+    }
     ###
     ### Begin install
     ###
