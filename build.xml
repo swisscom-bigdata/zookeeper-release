@@ -17,10 +17,9 @@
    limitations under the License.
 -->
 
-<project name="ZooKeeper" default="jar" 
-xmlns:ivy="antlib:org.apache.ivy.ant"
-xmlns:artifact="antlib:org.apache.maven.artifact.ant"
-xmlns:maven="antlib:org.apache.maven.artifact.ant">
+<project name="ZooKeeper" default="jar" xmlns:ivy="antlib:org.apache.ivy.ant"
+    xmlns:artifact="antlib:org.apache.maven.artifact.ant"
+    xmlns:maven="antlib:org.apache.maven.artifact.ant">
 
     <!-- read build.properties from the basedir if any -->
     <property file="${basedir}/build.properties" />
@@ -113,12 +112,12 @@ xmlns:maven="antlib:org.apache.maven.artifact.ant">
     <property name="ivy.test.lib" value="${build.dir}/test/lib"/>
     <property name="ivy.jdiff.lib" value="${build.dir}/jdiff/lib"/>
     <property name="ivysettings.xml" value="${basedir}/ivysettings.xml"/>
-    
+    <property name="win.pkg.dir" value="${basedir}/src/packages/win"/>
     <property name="mvnrepo" value="http://repo2.maven.org/maven2"/>
     <property name="tsk.org" value="/org/apache/maven/maven-ant-tasks/"/>
     <property name="ant-task.version" value="2.1.3"/>
     <property name="ant_task_repo_url"
-        value="${mvnrepo}${tsk.org}${ant-task.version}/maven-ant-tasks-${ant-task.version}.jar"/>
+       value="${mvnrepo}${tsk.org}${ant-task.version}/maven-ant-tasks-${ant-task.version}.jar"/>
     <property name="ant_task.jar" location="${ivy.lib}/maven-ant-tasks-${ant-task.version}.jar"/>
     
     <available property="clover.present"
@@ -179,6 +178,9 @@ xmlns:maven="antlib:org.apache.maven.artifact.ant">
     <property name="package.buildroot" value="/tmp/zookeeper_package_build_${user.name}"/>
     <property name="package.build.dir" value="/tmp/zookeeper_package_build_${user.name}/BUILD"/>
 
+    <condition property="isWindows">
+      <os family="windows" />
+    </condition>
     <!-- artifact publishing property set -->
     <property name="staging_repo_id" value="apache.staging.https"/>
     <property name="wagon-http.version" value="2.4"/>
@@ -203,6 +205,17 @@ xmlns:maven="antlib:org.apache.maven.artifact.ant">
         </tar>
       </sequential>
     </macrodef>
+
+		<macrodef name="macro_zip" description="Worker Macro for zip">
+			<attribute name="param.destfile"/>
+			<element name="param.listofitems"/>
+			<sequential>
+				<zip destfile="@{param.destfile}">
+				<param.listofitems/>
+				</zip>
+			</sequential>
+		</macrodef>
+
 
     <!-- the normal classpath -->
     <path id="java.classpath">
@@ -706,7 +719,7 @@ xmlns:maven="antlib:org.apache.maven.artifact.ant">
       </copy>
       
       <ivy:makepom settingsRef="${ant.project.name}" ivyfile="${basedir}/ivy.xml"
-                   pomfile="${dist.maven.dir}/${name}.pom">
+                   pomfile="${dist.maven.dir}/${final.name}.pom">
         <mapping conf="default" scope="compile"/>
         <mapping conf="test" scope="test"/>
       </ivy:makepom>
@@ -797,7 +810,7 @@ xmlns:maven="antlib:org.apache.maven.artifact.ant">
       </copy>
       
       <ivy:makepom settingsRef="${ant.project.name}" ivyfile="${basedir}/ivy.xml"
-                   pomfile="${dist.maven.dir}/${name}.pom">
+                   pomfile="${dist.maven.dir}/${final.name}.pom">
         <mapping conf="default" scope="compile"/>
         <mapping conf="test" scope="test"/>
       </ivy:makepom>
@@ -923,6 +936,119 @@ xmlns:maven="antlib:org.apache.maven.artifact.ant">
           </tarfileset>
         </param.listofitems>
       </macro_tar>
+    </target>
+
+    <target name="winpkg" depends="zip, just-winpkg" />
+    <target name="just-winpkg"  description="Make a package for Windows">
+
+      <!-- essentially copying the zip file and rip src and docs in the process -->
+      <zip destfile="${package.buildroot}/resources/${final.name}.zip">
+        <zipfileset src="${build.dir}/${final.name}.zip" excludes="**/src/**, **/docs/**"/>
+      </zip>
+      <copy todir="${package.buildroot}/scripts">
+
+        <fileset dir="${win.pkg.dir}/scripts">
+          <include name="**" />
+        </fileset>
+        <filterchain>
+          <replacetokens>
+	    <token key="final.name" value="${final.name}" />
+	    <token key="build.arch" value="${os.arch}" />
+	    <token key="package.release" value="${package.release}" />
+	    <token key="package.zip" value="${final.name}.zip" />
+	    <token key="version" value="${version}" />
+          </replacetokens>
+        </filterchain>
+      </copy>
+      <copy todir="${package.buildroot}/resources">
+	<fileset dir="${win.pkg.dir}/resources">
+	  <include name="**" />
+	</fileset>
+      </copy>
+      <copy todir="${package.buildroot}/template">
+        <fileset dir="${win.pkg.dir}/template">
+          <include name="**" />
+        </fileset>
+      </copy>
+      <macro_zip param.destfile="${build.dir}/${final.name}.winpkg.zip">
+	<param.listofitems>
+          <zipfileset dir="${package.buildroot}">
+            <include name="**" />
+          </zipfileset>
+        </param.listofitems>
+       </macro_zip>
+     </target>
+
+
+     <!-- ================================================================== -->
+     <!-- Make release zip                                                   -->
+     <!-- ================================================================== -->
+     <target name="zip" depends="package" description="Make multi-platform release zip, both source and binary">
+        <!-- build zip with source  -->
+       <macro_zip param.destfile="${build.dir}/${final.name}.zip">
+         <param.listofitems>
+           <zipfileset dir="${build.dir}" filemode="664">
+	     <exclude name="${final.name}/bin/*" />
+	     <exclude name="${final.name}/conf/zoo_sample.cfg" />
+	     <exclude name="${final.name}/contrib/*/bin/*" />
+	     <exclude name="${final.name}/**/compile" />
+	     <exclude name="${final.name}/**/config.guess" />
+	     <exclude name="${final.name}/**/config.sub" />
+	     <exclude name="${final.name}/**/configure" />
+	     <exclude name="${final.name}/**/depcomp" />
+	     <exclude name="${final.name}/**/install-sh" />
+	     <exclude name="${final.name}/**/ltmain.sh" />
+	     <exclude name="${final.name}/**/missing" />
+	     <exclude name="${final.name}/**/*.sh" />
+	     <include name="${final.name}/**" />
+           </zipfileset>
+
+           <zipfileset dir="${build.dir}" filemode="755">
+             <include name="${final.name}/bin/*" />
+	     <exclude name="${final.name}/conf/zoo_sample.cfg" />
+             <include name="${final.name}/contrib/*/bin/*" />
+	     <!-- autotools related commands -->
+	     <include name="${final.name}/**/compile" />
+	     <include name="${final.name}/**/config.guess" />
+	     <include name="${final.name}/**/config.sub" />
+	     <include name="${final.name}/**/configure" />
+	     <include name="${final.name}/**/depcomp" />
+	     <include name="${final.name}/**/install-sh" />
+	     <include name="${final.name}/**/ltmain.sh" />
+	     <include name="${final.name}/**/missing" />
+	     <!-- any shell scripts -->
+	     <include name="${final.name}/**/*.sh" />
+	   </zipfileset>
+	 </param.listofitems>
+       </macro_zip>
+       <!-- build multi-platform binary tarball -->
+       <macro_zip param.destfile="${build.dir}/${final.name}-bin.zip">
+         <param.listofitems>
+           <zipfileset dir="${build.dir}" filemode="664">
+	     <exclude name="${final.name}/conf/zoo_sample.cfg" />
+	     <include name="${final.name}/src/c/**" />
+	     <exclude name="${final.name}/src/packages/**" />
+	     <exclude name="${final.name}/src/recipies/**" />
+	     <exclude name="${final.name}/src/c/generated/**" />
+	     <exclude name="${final.name}/contrib/**" />
+	     <exclude name="${final.name}/recipes/**" />
+          </zipfileset>
+          <zipfileset dir="${build.dir}" filemode="664">
+	     <exclude name="${final.name}/src/recipies/**" />
+	    <exclude name="${final.name}/src/packages/**" />
+	    <exclude name="${final.name}/conf/zoo_sample.cfg" />
+	    <exclude name="${final.name}/bin/*" />
+	    <exclude name="${final.name}/src/**" />
+	    <exclude name="${final.name}/docs/**" />
+	    <exclude name="${final.name}/contrib/**" />
+	    <exclude name="${final.name}/recipes/**" />
+	    <include name="${final.name}/**" />
+          </zipfileset>
+          <zipfileset dir="${build.dir}" filemode="755">
+	    <include name="${final.name}/bin/*" />
+          </zipfileset>
+        </param.listofitems>
+      </macro_zip>
     </target>
 
     <target name="package-native" depends="compile-native, bin-package" description="Make C binding tarball">
@@ -1084,11 +1210,11 @@ xmlns:maven="antlib:org.apache.maven.artifact.ant">
      description="To deploy jar's to a maven repository"/>
 
     <target name="signanddeploy" depends="sign" if="staging">
-     <artifact:pom file="${dist.maven.dir}/${name}.pom" id="${name}.pom"/>
+     <artifact:pom file="${dist.maven.dir}/${final.name}.pom" id="${final.name}.pom"/>
      <artifact:install-provider artifactId="wagon-http" version="${wagon-http.version}"/>
      <artifact:deploy file="${dist.maven.dir}/${final.name}.jar">
        <remoteRepository id="${staging_repo_id}" url="${staging_repo_url}"/>
-       <pom refid="${name}.pom"/>
+       <pom refid="${final.name}.pom"/>
        <attach file="${dist.maven.dir}/${final.name}.jar" type="jar"/>
        <attach file="${dist.maven.dir}/${final.name}-tests.jar" type="jar" classifier="tests"/>
        <attach file="${dist.maven.dir}/${final.name}-javadoc.jar" type="jar" classifier="javadoc"/>
@@ -1121,10 +1247,10 @@ xmlns:maven="antlib:org.apache.maven.artifact.ant">
           </exec>
         </sequential>
       </macrodef>
-      <sign-artifact input.file="${dist.maven.dir}/${final.name}.jar" 
+      <sign-artifact input.file="${dist.maven.dir}/${final.name}.jar"
           output.file="${dist.maven.dir}/${final.name}.jar.asc" gpg.passphrase="${gpg.passphrase}"/>
-      <sign-artifact input.file="${dist.maven.dir}/${name}.pom" 
-          output.file="${dist.maven.dir}/${name}.pom.asc" gpg.passphrase="${gpg.passphrase}"/>
+      <sign-artifact input.file="${dist.maven.dir}/${final.name}.pom" 
+          output.file="${dist.maven.dir}/${final.name}.pom.asc" gpg.passphrase="${gpg.passphrase}"/>
       <sign-artifact input.file="${dist.maven.dir}/${final.name}-tests.jar" 
           output.file="${dist.maven.dir}/${final.name}-tests.jar.asc" gpg.passphrase="${gpg.passphrase}"/>
       <sign-artifact input.file="${dist.maven.dir}/${final.name}-javadoc.jar" 
@@ -1134,11 +1260,11 @@ xmlns:maven="antlib:org.apache.maven.artifact.ant">
     </target>
 
     <target name="simpledeploy" unless="staging">
-     <artifact:pom file="${dist.maven.dir}/${name}.pom" id="${name}.pom"/>
+     <artifact:pom file="${dist.maven.dir}/${final.name}.pom" id="${final.name}.pom"/>
      <artifact:install-provider artifactId="wagon-http" version="${wagon-http.version}"/>
      <artifact:deploy file="${dist.maven.dir}/${final.name}.jar">
        <remoteRepository id="${snapshots_repo_id}" url="${snapshots_repo_url}"/>
-       <pom refid="${name}.pom"/>
+       <pom refid="${final.name}.pom"/>
        <attach file="${dist.maven.dir}/${final.name}.jar" type="jar"/>
        <attach file="${dist.maven.dir}/${final.name}-tests.jar" type="jar" classifier="tests"/>
        <attach file="${dist.maven.dir}/${final.name}-javadoc.jar" type="jar" classifier="javadoc"/>
@@ -1149,20 +1275,28 @@ xmlns:maven="antlib:org.apache.maven.artifact.ant">
     <!-- ====================================================== -->
     <!-- mvn-install. Installing the jar and pom file to .m2    -->
     <!-- ====================================================== -->
-     
-     <target name="mvn-taskdef" depends="ivy-retrieve-mvn-ant-task">
-        <typedef resource="org/apache/maven/artifact/ant/antlib.xml"
-        uri="antlib:org.apache.maven.artifact.ant" classpathref="mvn-ant-task-classpath"/>
+     <target name="ant-task-download" description="To download mvn-ant-task">
+       <get src="${ant_task_repo_url}" dest="${ant_task.jar}" usetimestamp="true"/>
      </target>
- 
-     <target name="mvn-install" depends="bin-package, mvn-taskdef">
+
+     <target name="mvn-taskdef" depends="ant-task-download">
+       <path id="mvn-ant-task.classpath" path="${ant_task.jar}"/>
+       <typedef resource="org/apache/maven/artifact/ant/antlib.xml"
+         uri="antlib:org.apache.maven.artifact.ant"
+         classpathref="mvn-ant-task.classpath"/>
+     </target>
+
+     <target name="mvn-install" depends="tar, mvn-taskdef">
        <echo message="${dist.maven.dir}/${final.name}.pom" />
        <echo message="${dist.maven.dir}/${final.name}.jar" />
        <echo message="${dist.maven.dir}/${final.name}-sources.jar" />
        <echo message="${dist.maven.dir}/${final.name}-javadoc.jar" />
        <echo message="${dist.maven.dir}/${final.name}-tests.jar" />
-  
-       <artifact:pom id="zookeeper-pom" file="${dist.maven.dir}/${name}.pom"/>
+
+       <artifact:pom id="zookeeper-pom" file="${dist.maven.dir}/${final.name}.pom"/>
+       <echo>The version is ${zookeeper-pom.version}</echo>
+       <echo message="${dist.maven.dir}/${final.name}.jar" />
+
        <artifact:install file="${dist.maven.dir}/${final.name}.jar">
          <pom refid="zookeeper-pom" />
          <attach file="${dist.maven.dir}/${final.name}.jar" type="jar"/>
