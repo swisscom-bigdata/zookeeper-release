@@ -15,14 +15,34 @@ REM See the License for the specific language governing permissions and
 REM limitations under the License.
 
 set ZOOCFGDIR=%~dp0%..\conf
-set ZOO_LOG_DIR=%~dp0%..
-set ZOO_LOG4J_PROP=INFO,CONSOLE
 
-REM for sanity sake assume Java 1.6
-REM see: http://java.sun.com/javase/6/docs/technotes/tools/windows/java.html
+@rem Source the zookeeper-env.cmd.
+if exist "%ZOOCFGDIR%\zookeeper-env.cmd" (
+  call %ZOOCFGDIR%\zookeeper-env.cmd
+)
+
+if not defined ZOOCFG (
+  set ZOOCFG=zoo.cfg
+)
+
+set ZOOCFG=%ZOOCFGDIR%\%ZOOCFG%
+
+if not defined ZOO_LOG_DIR (
+  set ZOO_LOG_DIR=%~dp0%..\logs
+)
+
+if not defined ZOO_LOG4J_PROP (
+  set ZOO_LOG4J_PROP=INFO,CONSOLE
+)
+
+if defined JAVA_HOME (
+   set JAVA="%JAVA_HOME%\bin\java"
+) else (
+  set JAVA=java
+)
 
 REM add the zoocfg dir to classpath
-set CLASSPATH=%ZOOCFGDIR%
+set CLASSPATH=%ZOOCFGDIR%;%CLASSPATH%
 
 REM make it work in the release
 SET CLASSPATH=%~dp0..\*;%~dp0..\lib\*;%CLASSPATH%
@@ -30,5 +50,14 @@ SET CLASSPATH=%~dp0..\*;%~dp0..\lib\*;%CLASSPATH%
 REM make it work for developers
 SET CLASSPATH=%~dp0..\build\classes;%~dp0..\build\lib\*;%CLASSPATH%
 
-set ZOOCFG=%ZOOCFGDIR%\zoo.cfg
+REM default heap for zookeeper server
+if not defined ZK_SERVER_HEAP (
+  set ZK_SERVER_HEAP=1000
+)
+set SERVER_JVMFLAGS=-Xmx%ZK_SERVER_HEAP%m %SERVER_JVMFLAGS%
 
+REM default heap for zookeeper client
+if not defined ZK_CLIENT_HEAP (
+  set ZK_CLIENT_HEAP=256
+)
+set CLIENT_JVMFLAGS=-Xmx%ZK_CLIENT_HEAP%m %CLIENT_JVMFLAGS%
