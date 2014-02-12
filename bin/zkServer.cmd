@@ -26,7 +26,7 @@ if "%1" == "--service" (
 )
 
 set ZOOMAIN=org.apache.zookeeper.server.quorum.QuorumPeerMain
-set ARGS="-Dzookeeper.log.dir=%ZOO_LOG_DIR%" "-Dzookeeper.root.logger=%ZOO_LOG4J_PROP%" -cp "%CLASSPATH%" %JVMFLAGS% %ZOOMAIN% "%ZOOCFG%" %*
+set ARGS="-Dzookeeper.log.dir=%ZOO_LOG_DIR%" "-Dzookeeper.root.logger=%ZOO_LOG4J_PROP%" -cp "%CLASSPATH%" %JVMFLAGS% %ZOOMAIN% "%ZOOCFG%"
 
 if "%1" == "--service" (
   @echo ^<service^>
