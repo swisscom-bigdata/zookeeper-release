@@ -22,7 +22,7 @@ if defined CLIENT_JVMFLAGS (
 )
 
 set ZOOMAIN=org.apache.zookeeper.ZooKeeperMain
-java "-Dzookeeper.log.dir=%ZOO_LOG_DIR%" "-Dzookeeper.root.logger=%ZOO_LOG4J_PROP%" -cp "%CLASSPATH%" %JVMFLAGS% %ZOOMAIN% %*
+%JAVA% "-Dzookeeper.log.dir=%ZOO_LOG_DIR%" "-Dzookeeper.root.logger=%ZOO_LOG4J_PROP%" -cp "%CLASSPATH%" %JVMFLAGS% %ZOOMAIN% %*
 
 endlocal
 
