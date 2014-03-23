@@ -293,6 +293,11 @@ IMPROVEMENTS:
   ZOOKEEPER-1615. minor typos in ZooKeeper Programmer's Guide web page
   (Evan Zacks via phunt)
 
+  ZOOKEEPER-1901. [JDK8] Sort children for comparison in AsyncOps tests
+  (Andrew Purtell via michim)
+
+IMPROVEMENTS:
+
   ZOOKEEPER-1552. Enable sync request processor in Observer (thawan, fpj)
 
   ZOOKEEPER-1758. Add documentation for zookeeper.observer.syncEnabled flag 
