@@ -63,6 +63,9 @@ import org.slf4j.LoggerFactory;
 public class Zab1_0Test {
     private static final Logger LOG = LoggerFactory.getLogger(Zab1_0Test.class);
 
+    private static final File testData = new File(
+            System.getProperty("test.data.dir", "build/test/data"));
+
     private static final class LeadThread extends Thread {
         private final Leader leader;
 
@@ -132,7 +135,7 @@ public class Zab1_0Test {
     }
     @Test
     public void testLeaderInConnectingFollowers() throws Exception {    
-        File tmpDir = File.createTempFile("test", "dir");
+        File tmpDir = File.createTempFile("test", "dir", testData);
         tmpDir.delete();
         tmpDir.mkdir();
         Leader leader = null;
@@ -186,7 +189,7 @@ public class Zab1_0Test {
         
     @Test
     public void testLastAcceptedEpoch() throws Exception {    
-        File tmpDir = File.createTempFile("test", "dir");
+        File tmpDir = File.createTempFile("test", "dir", testData);
         tmpDir.delete();
         tmpDir.mkdir();
         Leader leader = null;
@@ -224,7 +227,7 @@ public class Zab1_0Test {
         
     @Test
     public void testLeaderInElectingFollowers() throws Exception {    
-        File tmpDir = File.createTempFile("test", "dir");
+        File tmpDir = File.createTempFile("test", "dir", testData);
         tmpDir.delete();
         tmpDir.mkdir();
         Leader leader = null;
@@ -327,7 +330,7 @@ public class Zab1_0Test {
         Socket pair[] = getSocketPair();
         Socket leaderSocket = pair[0];
         Socket followerSocket = pair[1];
-        File tmpDir = File.createTempFile("test", "dir");
+        File tmpDir = File.createTempFile("test", "dir", testData);
         tmpDir.delete();
         tmpDir.mkdir();
         LeadThread leadThread = null;
@@ -369,7 +372,7 @@ public class Zab1_0Test {
         Socket pair[] = getSocketPair();
         Socket leaderSocket = pair[0];
         Socket followerSocket = pair[1];
-        File tmpDir = File.createTempFile("test", "dir");
+        File tmpDir = File.createTempFile("test", "dir", testData);
         tmpDir.delete();
         tmpDir.mkdir();
         LeadThread leadThread = null;
@@ -436,7 +439,7 @@ public class Zab1_0Test {
     
     
     public void testFollowerConversation(FollowerConversation conversation) throws Exception {
-        File tmpDir = File.createTempFile("test", "dir");
+        File tmpDir = File.createTempFile("test", "dir", testData);
         tmpDir.delete();
         tmpDir.mkdir();
         Thread followerThread = null;
@@ -533,7 +536,7 @@ public class Zab1_0Test {
             @Override
             public void converseWithFollower(InputArchive ia, OutputArchive oa,
                     Follower f) throws Exception {
-                File tmpDir = File.createTempFile("test", "dir");
+                File tmpDir = File.createTempFile("test", "dir", testData);
                 tmpDir.delete();
                 tmpDir.mkdir();
                 File logDir = f.fzk.getTxnLogFactory().getDataDir().getParentFile();
@@ -683,7 +686,7 @@ public class Zab1_0Test {
             @Override
             public void converseWithFollower(InputArchive ia, OutputArchive oa,
                     Follower f) throws Exception {
-                File tmpDir = File.createTempFile("test", "dir");
+                File tmpDir = File.createTempFile("test", "dir", testData);
                 tmpDir.delete();
                 tmpDir.mkdir();
                 File logDir = f.fzk.getTxnLogFactory().getDataDir().getParentFile();
