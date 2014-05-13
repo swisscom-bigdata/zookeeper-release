@@ -685,7 +685,9 @@ function CreateAndConfigureServiceAsUserAccount(
     }
     else
     {
-        Write-Log "Service `"$service`" already exists, skipping service creation"
+        Write-Log "Service `"$service`" already exists, Removing `"$service`""
+        StopAndDeleteHadoopService $service
+        CreateAndConfigureServiceAsUserAccount $service $hdpResourcesDir $serviceBinDir $serviceCredential
     }
 }
 
