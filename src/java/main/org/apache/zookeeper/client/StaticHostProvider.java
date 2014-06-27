@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,9 +39,10 @@ public final class StaticHostProvider implements HostProvider {
     private static final Logger LOG = LoggerFactory
             .getLogger(StaticHostProvider.class);
 
-    private final List<InetSocketAddress> serverAddresses = new ArrayList<InetSocketAddress>(
+    private List<InetSocketAddress> serverAddresses = new ArrayList<InetSocketAddress>(
             5);
 
+    private Random sourceOfRandomness;
     private int lastIndex = -1;
 
     private int currentIndex = -1;
@@ -50,41 +52,75 @@ public final class StaticHostProvider implements HostProvider {
      * 
      * @param serverAddresses
      *            possibly unresolved ZooKeeper server addresses
-     * @throws UnknownHostException
      * @throws IllegalArgumentException
      *             if serverAddresses is empty or resolves to an empty list
      */
-    public StaticHostProvider(Collection<InetSocketAddress> serverAddresses)
-            throws UnknownHostException {
+    public StaticHostProvider(Collection<InetSocketAddress> serverAddresses) {
+       sourceOfRandomness = new Random(System.currentTimeMillis() ^ this.hashCode());
+
+        this.serverAddresses = resolveAndShuffle(serverAddresses);
+        if (this.serverAddresses.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "A HostProvider may not be empty!");
+        }       
+        currentIndex = -1;
+        lastIndex = -1;              
+    }
+
+    /**
+     * Constructs a SimpleHostSet. This constructor is used from StaticHostProviderTest to produce deterministic test results
+     * by initializing sourceOfRandomness with the same seed
+     * 
+     * @param serverAddresses
+     *            possibly unresolved ZooKeeper server addresses
+     * @param randomnessSeed a seed used to initialize sourceOfRandomnes
+     * @throws IllegalArgumentException
+     *             if serverAddresses is empty or resolves to an empty list
+     */
+    public StaticHostProvider(Collection<InetSocketAddress> serverAddresses,
+        long randomnessSeed) {
+        sourceOfRandomness = new Random(randomnessSeed);
+
+        this.serverAddresses = resolveAndShuffle(serverAddresses);
+        if (this.serverAddresses.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "A HostProvider may not be empty!");
+        }       
+        currentIndex = -1;
+        lastIndex = -1;              
+    }
+
+    private List<InetSocketAddress> resolveAndShuffle(Collection<InetSocketAddress> serverAddresses) {
+        List<InetSocketAddress> tmpList = new ArrayList<InetSocketAddress>(serverAddresses.size());       
         for (InetSocketAddress address : serverAddresses) {
-            InetAddress ia = address.getAddress();
-            InetAddress resolvedAddresses[] = InetAddress.getAllByName((ia!=null) ? ia.getHostAddress():
-                address.getHostName());
-            for (InetAddress resolvedAddress : resolvedAddresses) {
-                // If hostName is null but the address is not, we can tell that
-                // the hostName is an literal IP address. Then we can set the host string as the hostname
-                // safely to avoid reverse DNS lookup.
-                // As far as i know, the only way to check if the hostName is null is use toString().
-                // Both the two implementations of InetAddress are final class, so we can trust the return value of
-                // the toString() method.
-                if (resolvedAddress.toString().startsWith("/") 
-                        && resolvedAddress.getAddress() != null) {
-                    this.serverAddresses.add(
+            try {
+                InetAddress ia = address.getAddress();
+                InetAddress resolvedAddresses[] = InetAddress.getAllByName((ia!=null) ? ia.getHostAddress():
+                    address.getHostName());
+                for (InetAddress resolvedAddress : resolvedAddresses) {
+                    // If hostName is null but the address is not, we can tell that
+                    // the hostName is an literal IP address. Then we can set the host string as the hostname
+                    // safely to avoid reverse DNS lookup.
+                    // As far as i know, the only way to check if the hostName is null is use toString().
+                    // Both the two implementations of InetAddress are final class, so we can trust the return value of
+                    // the toString() method.
+                    if (resolvedAddress.toString().startsWith("/") 
+                            && resolvedAddress.getAddress() != null) {
+                        tmpList.add(
                             new InetSocketAddress(InetAddress.getByAddress(
                                     address.getHostName(),
                                     resolvedAddress.getAddress()), 
                                     address.getPort()));
-                } else {
-                    this.serverAddresses.add(new InetSocketAddress(resolvedAddress.getHostAddress(), address.getPort()));
-                }  
+                    } else {
+                        tmpList.add(new InetSocketAddress(resolvedAddress.getHostAddress(), address.getPort()));
+                    }
+                }
+            } catch (UnknownHostException ex) {
+                LOG.warn("No IP address found for server: {}", address, ex);
             }
         }
-        
-        if (this.serverAddresses.isEmpty()) {
-            throw new IllegalArgumentException(
-                    "A HostProvider may not be empty!");
-        }
-        Collections.shuffle(this.serverAddresses);
+        Collections.shuffle(tmpList, sourceOfRandomness);
+        return tmpList;
     }
 
     public int size() {

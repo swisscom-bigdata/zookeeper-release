@@ -36,13 +36,14 @@ import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Random;
 
 public class StaticHostProviderTest extends ZKTestCase {
     private static final Logger LOG = LoggerFactory.getLogger(StaticHostProviderTest.class);
     
     @Test
-    public void testNextGoesRound() throws UnknownHostException {
+    public void testNextGoesRound() {
         HostProvider hostProvider = getHostProvider((byte) 2);
         InetSocketAddress first = hostProvider.next(0);
         assertTrue(first instanceof InetSocketAddress);
@@ -51,7 +52,7 @@ public class StaticHostProviderTest extends ZKTestCase {
     }
 
     @Test
-    public void testNextGoesRoundAndSleeps() throws UnknownHostException {
+    public void testNextGoesRoundAndSleeps() {
         byte size = 2;
         HostProvider hostProvider = getHostProvider(size);
         while (size > 0) {
@@ -65,7 +66,7 @@ public class StaticHostProviderTest extends ZKTestCase {
     }
 
     @Test
-    public void testNextDoesNotSleepForZero() throws UnknownHostException {
+    public void testNextDoesNotSleepForZero() {
         byte size = 2;
         HostProvider hostProvider = getHostProvider(size);
         while (size > 0) {
@@ -78,20 +79,58 @@ public class StaticHostProviderTest extends ZKTestCase {
         assertTrue(5 > stop - start);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testTwoInvalidHostAddresses() {
+        ArrayList<InetSocketAddress> list = new ArrayList<InetSocketAddress>();
+        list.add(new InetSocketAddress("a", 2181));
+        list.add(new InetSocketAddress("b", 2181));
+        new StaticHostProvider(list);
+    }
+
     @Test
-    public void testTwoConsequitiveCallsToNextReturnDifferentElement()
-            throws UnknownHostException {
+    public void testOneInvalidHostAddresses() {
+        Collection<InetSocketAddress> addr = getServerAddresses((byte) 1);
+        addr.add(new InetSocketAddress("a", 2181));
+
+        StaticHostProvider sp = new StaticHostProvider(addr);
+        InetSocketAddress n1 = sp.next(0);
+        InetSocketAddress n2 = sp.next(0);
+
+        assertEquals(n2, n1);
+    }
+
+    @Test
+    public void testTwoConsequitiveCallsToNextReturnDifferentElement() {
         HostProvider hostProvider = getHostProvider((byte) 2);
         assertNotSame(hostProvider.next(0), hostProvider.next(0));
     }
 
     @Test
-    public void testOnConnectDoesNotReset() throws UnknownHostException {
+    public void testOnConnectDoesNotReset() {
         HostProvider hostProvider = getHostProvider((byte) 2);
         InetSocketAddress first = hostProvider.next(0);
         hostProvider.onConnected();
         InetSocketAddress second = hostProvider.next(0);
         assertNotSame(first, second);
+    }
+
+    private HashMap<Byte, Collection<InetSocketAddress>> precomputedLists = new
+            HashMap<Byte, Collection<InetSocketAddress>>();
+    private Collection<InetSocketAddress> getServerAddresses(byte size)   {
+        if (precomputedLists.containsKey(size)) return precomputedLists.get(size);
+        ArrayList<InetSocketAddress> list = new ArrayList<InetSocketAddress>(
+                size);
+        while (size > 0) {
+            try {
+                list.add(new InetSocketAddress(InetAddress.getByAddress(new byte[]{10, 10, 10, size}), 1234 + size));
+            } catch (UnknownHostException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            --size;
+        }
+        precomputedLists.put(size, list);
+        return list;
     }
 
     @Test
@@ -124,8 +163,7 @@ public class StaticHostProviderTest extends ZKTestCase {
         return list;
     }
     
-    private StaticHostProvider getHostProvider(byte size)
-            throws UnknownHostException {
+    private StaticHostProvider getHostProvider(byte size) {
         ArrayList<InetSocketAddress> list = new ArrayList<InetSocketAddress>(
                 size);
         while (size > 0) {
