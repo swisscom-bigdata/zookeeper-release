@@ -25,15 +25,19 @@
 # relative to the canonical path of this script.
 #
 
-# use POSTIX interface, symlink is followed automatically
-ZOOBIN="${BASH_SOURCE-$0}"
-ZOOBIN="$(dirname "${ZOOBIN}")"
-ZOOBINDIR="$(cd "${ZOOBIN}"; pwd)"
+if [ -z "${ZOOKEEPER_HOME}" ]; then
+  # use POSIX interface, symlink is followed automatically
+  ZOOBIN="${BASH_SOURCE-$0}"
+  ZOOBIN=`dirname ${ZOOBIN}`
+  ZOOBINDIR=`cd ${ZOOBIN}; pwd`
 
-if [ -e "$ZOOBIN/../libexec/zkEnv.sh" ]; then
-  . "$ZOOBINDIR"/../libexec/zkEnv.sh
+  if [ -e "$ZOOBIN/../libexec/zkEnv.sh" ]; then
+    . "$ZOOBINDIR"/../libexec/zkEnv.sh
+  else
+    . "$ZOOBINDIR"/zkEnv.sh
+  fi
 else
-  . "$ZOOBINDIR"/zkEnv.sh
+  . "${ZOOKEEPER_HOME}/bin/zkEnv.sh"
 fi
 
 "$JAVA" "-Dzookeeper.log.dir=${ZOO_LOG_DIR}" "-Dzookeeper.root.logger=${ZOO_LOG4J_PROP}" \

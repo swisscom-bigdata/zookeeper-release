@@ -23,8 +23,13 @@
 # or the conf directory that is
 # a sibling of this script's directory
 
-ZOOBINDIR="${ZOOBINDIR:-/usr/bin}"
-ZOOKEEPER_PREFIX="${ZOOBINDIR}/.."
+if [ -z "${ZOOKEEPER_HOME}" ]; then
+  ZOOBINDIR=${ZOOBINDIR:-/usr/bin}
+  ZOOKEEPER_PREFIX=${ZOOBINDIR}/..
+else
+  ZOOBINDIR="${ZOOKEEPER_HOME}/bin"
+  ZOOKEEPER_PREFX="${ZOOKEEPER_HOME}"
+fi
 
 if [ "x$ZOOCFGDIR" = "x" ]
 then
