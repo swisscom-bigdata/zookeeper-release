@@ -1,4 +1,4 @@
-﻿==========================================
+==========================================
 ZooInspector - Browser and Editor for ZooKeeper Instances
 Author: Colin Goodheart-Smithe
 Date: February 2010
