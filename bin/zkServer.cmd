@@ -17,8 +17,12 @@ REM limitations under the License.
 setlocal
 call "%~dp0zkEnv.cmd"
 
+if defined SERVER_JVMFLAGS (
+  set JVMFLAGS=%SERVER_JVMFLAGS% %JVMFLAGS%
+)
+
 set ZOOMAIN=org.apache.zookeeper.server.quorum.QuorumPeerMain
 echo on
-call %JAVA% "-Dzookeeper.log.dir=%ZOO_LOG_DIR%" "-Dzookeeper.root.logger=%ZOO_LOG4J_PROP%" -cp "%CLASSPATH%" %ZOOMAIN% "%ZOOCFG%" %*
+call %JAVA% "-Dzookeeper.log.dir=%ZOO_LOG_DIR%" "-Dzookeeper.root.logger=%ZOO_LOG4J_PROP%" -cp "%CLASSPATH%" %JVMFLAGS% %ZOOMAIN% "%ZOOCFG%" %*
 
 endlocal

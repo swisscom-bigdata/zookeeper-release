@@ -17,8 +17,12 @@ REM limitations under the License.
 setlocal
 call "%~dp0zkEnv.cmd"
 
+if defined CLIENT_JVMFLAGS (
+  set JVMFLAGS=%CLIENT_JVMFLAGS% %JVMFLAGS%
+)
+
 set ZOOMAIN=org.apache.zookeeper.ZooKeeperMain
-call %JAVA% "-Dzookeeper.log.dir=%ZOO_LOG_DIR%" "-Dzookeeper.root.logger=%ZOO_LOG4J_PROP%" -cp "%CLASSPATH%" %ZOOMAIN% %*
+call %JAVA% "-Dzookeeper.log.dir=%ZOO_LOG_DIR%" "-Dzookeeper.root.logger=%ZOO_LOG4J_PROP%" -cp "%CLASSPATH%" %JVMFLAGS% %ZOOMAIN% %*
 
 endlocal
 
