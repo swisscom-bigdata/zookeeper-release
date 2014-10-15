@@ -24,6 +24,9 @@
     <!-- read build.properties from the basedir if any -->
     <property file="${basedir}/build.properties" />
 
+    <!-- read build.properties from the basedir if any -->
+    <property file="${basedir}/build.properties" />
+
     <property name="Name" value="ZooKeeper" />
     <property name="name" value="zookeeper" />
 
@@ -182,6 +185,7 @@
     <condition property="isWindows">
       <os family="windows" />
     </condition>
+
     <!-- artifact publishing property set -->
     <property name="staging_repo_id" value="apache.staging.https"/>
     <property name="wagon-http.version" value="2.4"/>
@@ -404,6 +408,7 @@
                     pattern="${ivy.lib}/[artifact]-[revision].[ext]"/>
       <ivy:cachepath pathid="mvn-ant-task-classpath" conf="mvn-ant-task"/>
     </target>
+
     <target name="compile" depends="ivy-retrieve,clover,build-generated">
         <javac srcdir="${java.src.dir}" destdir="${build.classes}" includeantruntime="false"
                target="${javac.target}" source="${javac.source}" debug="on">
@@ -716,9 +721,6 @@
         <fileset file="${build.dir}/${final.name}.jar"/>
       </copy>
 
-      <checksum file="${dist.dir}/${final.name}.jar" algorithm="md5"/>
-      <checksum file="${dist.dir}/${final.name}.jar" algorithm="sha1"/>
-
       <mkdir dir="${dist.maven.dir}"/>
 
       <copy file="${build.dir}/${final.name}-bin.jar"
@@ -728,25 +730,14 @@
         <fileset file="${build.dir}/${final.name}-javadoc.jar"/>
       </copy>
 
-      <checksum file="${dist.maven.dir}/${final.name}.jar" algorithm="md5"/>
-      <checksum file="${dist.maven.dir}/${final.name}.jar" algorithm="sha1"/>
-      <checksum file="${dist.maven.dir}/${final.name}-sources.jar" algorithm="md5"/>
-      <checksum file="${dist.maven.dir}/${final.name}-sources.jar" algorithm="sha1"/>
-      <checksum file="${dist.maven.dir}/${final.name}-javadoc.jar" algorithm="md5"/>
-      <checksum file="${dist.maven.dir}/${final.name}-javadoc.jar" algorithm="sha1"/>
-
       <ivy:makepom settingsRef="${ant.project.name}" ivyfile="${basedir}/ivy.xml"
                    pomfile="${dist.maven.dir}/${name}.pom">
         <mapping conf="default" scope="compile"/>
         <mapping conf="test" scope="test"/>
       </ivy:makepom>
-      <checksum file="${dist.maven.dir}/${final.name}.pom" algorithm="md5"/>
-      <checksum file="${dist.maven.dir}/${final.name}.pom" algorithm="sha1"/>
 
       <copy file="${build.dir}/${final.name}-test.jar"
             tofile="${dist.maven.dir}/${final.name}-tests.jar"/> 
-      <checksum file="${dist.maven.dir}/${final.name}-tests.jar" algorithm="sha1"/>
-      <checksum file="${dist.maven.dir}/${final.name}-tests.jar" algorithm="md5"/>
 
       <copy todir="${dist.dir}/bin">
         <fileset dir="bin"/>
@@ -821,9 +812,6 @@
         <fileset file="${build.dir}/${final.name}.jar"/>
       </copy>
 
-      <checksum file="${dist.dir}/share/zookeeper/${final.name}.jar" algorithm="md5"/>
-      <checksum file="${dist.dir}/share/zookeeper/${final.name}.jar" algorithm="sha1"/>
-
       <mkdir dir="${dist.maven.dir}"/>
 
       <copy file="${build.dir}/${final.name}-bin.jar"
@@ -833,28 +821,14 @@
         <fileset file="${build.dir}/${final.name}-javadoc.jar"/>
       </copy>
       
-      <checksum file="${dist.maven.dir}/${final.name}.jar" algorithm="md5"/>
-      <checksum file="${dist.maven.dir}/${final.name}.jar" algorithm="sha1"/>
-      <checksum file="${dist.maven.dir}/${final.name}-sources.jar" algorithm="md5"/>
-      <checksum file="${dist.maven.dir}/${final.name}-sources.jar" algorithm="sha1"/>
-      <checksum file="${dist.maven.dir}/${final.name}-javadoc.jar" algorithm="md5"/>
-      <checksum file="${dist.maven.dir}/${final.name}-javadoc.jar" algorithm="sha1"/>
-
       <ivy:makepom settingsRef="${ant.project.name}" ivyfile="${basedir}/ivy.xml"
                    pomfile="${dist.maven.dir}/${name}.pom">
         <mapping conf="default" scope="compile"/>
         <mapping conf="test" scope="test"/>
       </ivy:makepom>
-      <checksum file="${dist.maven.dir}/${name}.pom" algorithm="md5"/>
-      <checksum file="${dist.maven.dir}/${name}.pom" algorithm="sha1"/>
-      
       
       <copy file="${build.dir}/${final.name}-test.jar"
             tofile="${dist.maven.dir}/${final.name}-tests.jar"/>
-      <checksum file="${dist.maven.dir}/${final.name}-tests.jar" algorithm="sha1"/>
-      <checksum file="${dist.maven.dir}/${final.name}-tests.jar" algorithm="md5"/>
-
-
       <copy todir="${dist.dir}/bin">
         <fileset dir="bin" includes="zkCli*"/>
       </copy>
@@ -1310,7 +1284,7 @@
           </exec>
         </sequential>
       </macrodef>
-      <sign-artifact input.file="${dist.maven.dir}/${final.name}.jar"
+      <sign-artifact input.file="${dist.maven.dir}/${final.name}.jar" 
           output.file="${dist.maven.dir}/${final.name}.jar.asc" gpg.passphrase="${gpg.passphrase}"/>
       <sign-artifact input.file="${dist.maven.dir}/${name}.pom" 
           output.file="${dist.maven.dir}/${name}.pom.asc" gpg.passphrase="${gpg.passphrase}"/>
@@ -1338,28 +1312,19 @@
     <!-- ====================================================== -->
     <!-- mvn-install. Installing the jar and pom file to .m2    -->
     <!-- ====================================================== -->
-     <target name="ant-task-download" description="To download mvn-ant-task">
-       <get src="${ant_task_repo_url}" dest="${ant_task.jar}" usetimestamp="true"/>
+     
+     <target name="mvn-taskdef" depends="ivy-retrieve-mvn-ant-task">
+        <typedef resource="org/apache/maven/artifact/ant/antlib.xml"
+        uri="antlib:org.apache.maven.artifact.ant" classpathref="mvn-ant-task-classpath"/>
      </target>
-
-     <target name="mvn-taskdef" depends="ivy-retrieve-mvn-ant-task, ant-task-download">
-       <path id="mvn-ant-task.classpath" path="${ant_task.jar}"/>
-       <typedef resource="org/apache/maven/artifact/ant/antlib.xml"
-         uri="antlib:org.apache.maven.artifact.ant"
-         classpathref="mvn-ant-task.classpath"/>
-     </target>
-
-     <target name="mvn-install" depends="tar, mvn-taskdef">
-       <echo message="${dist.maven.dir}/${name}.pom" />
+ 
+     <target name="mvn-install" depends="bin-package, mvn-taskdef">
+       <echo message="${dist.maven.dir}/${final.name}.pom" />
        <echo message="${dist.maven.dir}/${final.name}.jar" />
        <echo message="${dist.maven.dir}/${final.name}-sources.jar" />
        <echo message="${dist.maven.dir}/${final.name}-javadoc.jar" />
        <echo message="${dist.maven.dir}/${final.name}-tests.jar" />
-
        <artifact:pom id="zookeeper-pom" file="${dist.maven.dir}/${name}.pom"/>
-       <echo>The version is ${zookeeper-pom.version}</echo>
-       <echo message="${dist.maven.dir}/${final.name}.jar" />
-
        <artifact:install file="${dist.maven.dir}/${final.name}.jar">
          <pom refid="zookeeper-pom" />
          <attach file="${dist.maven.dir}/${final.name}.jar" type="jar"/>
