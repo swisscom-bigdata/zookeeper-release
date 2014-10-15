@@ -14,12 +14,30 @@ REM WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 REM See the License for the specific language governing permissions and
 REM limitations under the License.
 
-setlocal
+setlocal enabledelayedexpansion
 call "%~dp0zkEnv.cmd"
 
+if defined SERVER_JVMFLAGS (
+  set JVMFLAGS=%SERVER_JVMFLAGS% %JVMFLAGS%
+)
+
+if "%1" == "--service" (
+  set ZOO_LOG4J_PROP=INFO,ROLLINGFILE
+)
+
 set ZOOMAIN=org.apache.zookeeper.server.quorum.QuorumPeerMain
-echo on
-java "-Dzookeeper.log.dir=%ZOO_LOG_DIR%" "-Dzookeeper.root.logger=%ZOO_LOG4J_PROP%" -cp "%CLASSPATH%" %ZOOMAIN% "%ZOOCFG%" %*
 
+set ARGS="-Dzookeeper.log.dir=%ZOO_LOG_DIR%" "-Dzookeeper.root.logger=%ZOO_LOG4J_PROP%" -cp "%CLASSPATH%" %JVMFLAGS% %ZOOMAIN% "%ZOOCFG%"
+
+if "%1" == "--service" (
+  @echo ^<service^>
+  @echo   ^<id^>zkServer^</id^>
+  @echo   ^<name^>zkServer^</name^>
+  @echo   ^<description^>This service runs Isotope zkServer^</description^>
+  @echo   ^<executable^>%JAVA%^</executable^>
+  @echo   ^<arguments^>%ARGS%^</arguments^>
+  @echo ^</service^>
+) else (
+  call %JAVA% %ARGS%
+)
 endlocal
-
