@@ -680,7 +680,7 @@
 
       <mkdir dir="${dist.maven.dir}"/>
 
-      <copy file="${build.dir}/${final.name}-bin.jar"
+      <copy file="${build.dir}/${final.name}.jar"
             tofile="${dist.maven.dir}/${final.name}.jar"/> 
       <copy todir="${dist.maven.dir}"> 
         <fileset file="${build.dir}/${final.name}-sources.jar"/>
@@ -771,7 +771,7 @@
 
       <mkdir dir="${dist.maven.dir}"/>
 
-      <copy file="${build.dir}/${final.name}-bin.jar"
+      <copy file="${build.dir}/${final.name}.jar"
             tofile="${dist.maven.dir}/${final.name}.jar"/> 
       <copy todir="${dist.maven.dir}"> 
         <fileset file="${build.dir}/${final.name}-sources.jar"/>
