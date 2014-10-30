@@ -512,7 +512,7 @@ public class Zab1_0Test {
     }
 
     public void testObserverConversation(ObserverConversation conversation) throws Exception {
-        File tmpDir = File.createTempFile("test", "dir");
+        File tmpDir = File.createTempFile("test", "dir", testData);
         tmpDir.delete();
         tmpDir.mkdir();
         Thread observerThread = null;
@@ -998,7 +998,7 @@ public class Zab1_0Test {
             @Override
             public void converseWithObserver(InputArchive ia, OutputArchive oa,
                     Observer o) throws Exception {
-                File tmpDir = File.createTempFile("test", "dir");
+                File tmpDir = File.createTempFile("test", "dir", testData);
                 tmpDir.delete();
                 tmpDir.mkdir();
                 File logDir = o.zk.getTxnLogFactory().getDataDir().getParentFile();
@@ -1231,7 +1231,7 @@ public class Zab1_0Test {
         Socket pair[] = getSocketPair();
         Socket leaderSocket = pair[0];
         Socket followerSocket = pair[1];
-        File tmpDir = File.createTempFile("test", "dir");
+        File tmpDir = File.createTempFile("test", "dir", testData);
         tmpDir.delete();
         tmpDir.mkdir();
         LeadThread leadThread = null;
