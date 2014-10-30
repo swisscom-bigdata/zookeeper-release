@@ -1416,7 +1416,7 @@ public class Zab1_0Test {
 
     @Test
     public void testInitialAcceptedCurrent() throws Exception {
-        File tmpDir = File.createTempFile("test", ".dir");
+        File tmpDir = File.createTempFile("test", ".dir", testData);
         tmpDir.delete();
         tmpDir.mkdir();
         try {
