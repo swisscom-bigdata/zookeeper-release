@@ -1,0 +1,18 @@
+Champlain (HDP-2.2) is based on Apache ZooKeeper 3.4.6 (601207e)
+
+Following are the changes on top of Apache ZooKeeper 3.4.6
+
+Bug fixes:
+ZOOKEEPER-1897 ZK Shell/Cli not processing commands (stack via michim)
+ZOOKEEPER-1926 Unit tests should only use build/test/data for data
+ZOOKEEPER-2064 Prevent resource leak in various classes
+ZOOKEEPER-2053 Make scripts use ZOOKEEPER_HOME if set.
+ZOOKEEPER-1876 Add support for installing windows services in .cmd scripts
+ZOOKEEPER-1848 [WINDOWS] Java NIO socket channels does not work with Windows ipv6 on JDK6
+ZOOKEEPER-1574 Set svn:eol-style property to native.
+ZOOKEEPER-1575 adding .gitattributes to prevent CRLF and LF mismatches for source and text files (Raja Aluri via michim)
+ZOOKEEPER-1888 ZkCli.cmd commands fail with "'java' is not recognized as an internal or external command" (Ivan Mitic via michim)
+ZOOKEEPER-1791 ZooKeeper package includes unnecessary jars that are part of the package. (mahadev)
+
+Other fixes:
+Various build changes related to Hortonworks build infrastructure and Windows build/install support
