@@ -92,6 +92,7 @@ public class QuorumPeer extends Thread implements QuorumStats.Provider {
     private ZKDatabase zkDb;
 
     public static class QuorumServer {
+    	
         public QuorumServer(long id, InetSocketAddress addr,
                 InetSocketAddress electionAddr) {
             this.id = id;
@@ -113,9 +114,41 @@ public class QuorumPeer extends Thread implements QuorumStats.Provider {
             this.type = type;
         }
         
+        public QuorumServer(long id, String hostname,
+                Integer port, Integer electionPort, LearnerType type) {
+          this.id = id;
+          this.hostname=hostname;
+          if (port!=null){
+            this.port=port;
+          }
+          if (electionPort!=null){
+            this.electionPort=electionPort;
+          }
+          if (type!=null){
+            this.type = type;
+          }
+          this.recreateSocketAddresses();
+        }
+
+        public void recreateSocketAddresses() {
+          if (this.hostname == null || this.hostname.isEmpty()) return;
+          InetSocketAddress newAddr=new InetSocketAddress(this.hostname, this.port);
+          InetSocketAddress newElectionAddr=null;
+          if (this.electionPort > 0){
+            newElectionAddr=new InetSocketAddress(this.hostname, this.electionPort);
+          }
+          this.addr=newAddr;
+          this.electionAddr=newElectionAddr;
+        }
         public InetSocketAddress addr;
 
         public InetSocketAddress electionAddr;
+        
+        public String hostname;
+        
+        public int port=2888;
+        
+        public int electionPort=-1;
         
         public long id;
         
