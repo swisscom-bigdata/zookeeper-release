@@ -377,11 +377,13 @@ public class QuorumCnxManager {
                 // detail.
                 LOG.warn("Cannot open channel to " + sid
                         + " at election address " + electionAddr, e);
+                self.getView().get(sid).recreateSocketAddresses();
                 throw e;
             } catch (IOException e) {
                 LOG.warn("Cannot open channel to " + sid
                         + " at election address " + electionAddr,
                         e);
+                self.getView().get(sid).recreateSocketAddresses();
             }
         } else {
             LOG.debug("There is a connection already for server " + sid);
