@@ -19,7 +19,7 @@ IMPROVEMENTS:
   ZOOKEEPER-1897. ZK Shell/Cli not processing commands (stack via michim)
 
 
-Release 3.4.6 - 2014-03-10 
+Release 3.4.6 - 2014-03-10
 
 Backward compatible changes:
 
@@ -53,8 +53,8 @@ BUGFIXES:
 
   ZOOKEEPER-1334. Zookeeper 3.4.x is not OSGi compliant - MANIFEST.MF
   is flawed (Claus Ibsen via phunt)
-  
-  ZOOKEEPER-1535. ZK Shell/Cli re-executes last command on exit 
+
+  ZOOKEEPER-1535. ZK Shell/Cli re-executes last command on exit
   (Edward Ribeiro via camille)
 
   ZOOKEEPER-1495. ZK client hangs when using a function not available
@@ -85,33 +85,33 @@ BUGFIXES:
   (phunt via fpj)
 
   ZOOKEEPER-1706. Typo in Double Barriers example (Jingguo Yao via fpj)
-  
+
   ZOOKEEPER-1642. Leader Loading Database Twice (fpj via camille)
-  
+
   ZOOKEEPER-1663. scripts don't work when path contains spaces (Amichai Rothman via camille)
 
   ZOOKEEPER-1714 perl client segfaults if ZOO_READ_ACL_UNSAFE constant is used
   (Botond Hejj via camille)
-  
+
   ZOOKEEPER-1719. zkCli.sh, zkServer.sh and zkEnv.sh regression caused by ZOOKEEPER-1663
   (Marshall McMullen via camille)
-  
+
   ZOOKEEPER-1702. ZooKeeper client may write operation packets before
   receiving successful response to connection request, can cause TCP
   RST (Chris Nauroth via phunt)
 
   ZOOKEEPER-1629. testTransactionLogCorruption occasionally fails. (shralex via camille)
 
-  ZOOKEEPER-1731. Unsynchronized access to ServerCnxnFactory.connectionBeans results in 
+  ZOOKEEPER-1731. Unsynchronized access to ServerCnxnFactory.connectionBeans results in
   deadlock. (Dave Latham via camille)
 
   ZOOKEEPER-1713. wrong time calculation in zkfuse.cc (german via fpj)
 
   ZOOKEEPER-1379. 'printwatches, redo, history and connect '. client commands always print usage. This is not necessary (edward via fpj)
 
-  ZOOKEEPER-1448: Node+Quota creation in transaction log can crash leader startup (Botond Hejj via fpj) 
- 
-  ZOOKEEPER-1664. Kerberos auth doesn't work with native platform GSS integration. (Boaz Kelmer via camille) 
+  ZOOKEEPER-1448: Node+Quota creation in transaction log can crash leader startup (Botond Hejj via fpj)
+
+  ZOOKEEPER-1664. Kerberos auth doesn't work with native platform GSS integration. (Boaz Kelmer via camille)
 
   ZOOKEEPER-1750. Race condition producing NPE in NIOServerCnxn.toString
   (Rakesh R via michim)
@@ -123,7 +123,7 @@ BUGFIXES:
 
   ZOOKEEPER-1657. Increased CPU usage by unnecessary SASL checks (Philip K. Warren via fpj)
 
-  ZOOKEEPER-1753. ClientCnxn is not properly releasing the resources, 
+  ZOOKEEPER-1753. ClientCnxn is not properly releasing the resources,
                   which are used to ping RwServer (Rakesh R via fpj)
 
   ZOOKEEPER-1096. Leader communication should listen on specified IP, not wildcard address (Jared Cantwell, German Blanco via fpj)
@@ -148,7 +148,7 @@ BUGFIXES:
 
   ZOOKEEPER-877. zkpython does not work with python3.1
   (Daniel Enman via phunt)
-  
+
   ZOOKEEPER-1624. PrepRequestProcessor abort multi-operation incorrectly. (thawan via camille)
 
   ZOOKEEPER-1610. Some classes are using == or != to compare
@@ -161,7 +161,7 @@ BUGFIXES:
   ZOOKEEPER-1732. ZooKeeper server unable to join established
   ensemble (German Blanco via fpj)
 
-  ZOOKEEPER-1667. Watch event isn't handled correctly when 
+  ZOOKEEPER-1667. Watch event isn't handled correctly when
   a client reestablish to a server (jacky007, fpj via fpj)
 
   ZOOKEEPER-1799. SaslAuthFailDesignatedClientTest.testAuth fails
@@ -177,7 +177,7 @@ BUGFIXES:
   (thawan, fpj via thawan)
 
   ZOOKEEPER-1808. Add version to FLE notifications for 3.4 branch (fpj)
-  
+
   ZOOKEEPER-1812. ZooInspector reconnection always fails if first
   connection fails (Benjamin Jaton via phunt)
 
@@ -193,14 +193,14 @@ BUGFIXES:
 
   ZOOKEEPER-1632. fix memory leaks in cli_st (fpj via michim)
 
-  ZOOKEEPER-1459. Standalone ZooKeeperServer is not closing 
+  ZOOKEEPER-1459. Standalone ZooKeeperServer is not closing
   the transaction log files on shutdown (Rakesh R via fpj)
 
   ZOOKEEPER-1019. zkfuse doesn't list dependency on boost in README
   (Raul Gutierrez Segales via michim)
 
   ZOOKEEPER-1834. Catch IOException in FileTxnLog (fpj via michim)
-  
+
   ZOOKEEPER-1382. Zookeeper server holds onto dead/expired session ids in the watch data structures
   (Germán Blanco and Michael Morello via camille)
 
@@ -220,11 +220,11 @@ BUGFIXES:
 
   ZOOKEEPER-1841. problem in QuorumTest (Germán via fpj)
 
-  ZOOKEEPER-1733 FLETest#testLE is flaky oo.l windows boxes 
+  ZOOKEEPER-1733 FLETest#testLE is flaky oo.l windows boxes
   (michim, Jeffrey Zhong via fpj)
 
   ZOOKEEPER-1849. Need to properly tear down tests in various
-  cases (Germán via fpj) 
+  cases (Germán via fpj)
 
   ZOOKEEPER-1179. NettyServerCnxn does not properly close
   socket on 4 letter word requests (Rakesh R, Germán Blanco
@@ -252,7 +252,7 @@ BUGFIXES:
   and starting server (Rakesh R via fpj)
 
   ZOOKEEPER-1867. Bug in ZkDatabaseCorruptionTest (fpj)
- 
+
   ZOOKEEPER-1872. QuorumPeer is not shutdown in few cases
   (Rakesh R via fpj)
 
@@ -266,8 +266,8 @@ BUGFIXES:
   unregister failed jmxbeans (Rakesh R via michim)
 
   ZOOKEEPER-1844. TruncateTest fails on windows (Rakesh R via fpj)
-  
-  ZOOKEEPER-1755. Concurrent operations of four letter 'dump' ephemeral 
+
+  ZOOKEEPER-1755. Concurrent operations of four letter 'dump' ephemeral
   command and killSession causing NPE (Rakesh R via camille)
 
 IMPROVEMENTS:
@@ -292,17 +292,17 @@ IMPROVEMENTS:
 
   ZOOKEEPER-1552. Enable sync request processor in Observer (thawan, fpj)
 
-  ZOOKEEPER-1758. Add documentation for zookeeper.observer.syncEnabled flag 
+  ZOOKEEPER-1758. Add documentation for zookeeper.observer.syncEnabled flag
   (thawan, fpj via thawan)
 
   ZOOKEEPER-1771. ZooInspector authentication (Benjamin Jaton via phunt)
 
   ZOOKEEPER-1627. Add org.apache.zookeeper.common to exported packages
   in OSGi MANIFEST (Arnoud Glimmerveen via phunt)
-  
-  ZOOKEEPER-1666. Avoid Reverse DNS lookup if the hostname in 
+
+  ZOOKEEPER-1666. Avoid Reverse DNS lookup if the hostname in
   connection string is literal IP address. (George Cao via camille)
- 
+
   ZOOKEEPER-1786. ZooKeeper data model documentation is incorrect
   (Niraj Tolia via fpj)
 
@@ -324,7 +324,7 @@ BUGFIXES:
   OpenJDK. (Eugene Koontz via mahadev)
 
 
-Release 3.4.4 - 2012-09-17 
+Release 3.4.4 - 2012-09-17
 
 Backward compatible changes:
 
@@ -333,13 +333,13 @@ BUGFIXES:
   ZOOKEEPER-1466. QuorumCnxManager.shutdown missing synchronization.
   (Patrick Hunt via mahadev)
 
-  ZOOKEEPER-1386. avoid flaky URL redirection in "ant javadoc" : 
-  replace "http://java.sun.com/javase/6/docs/api/" with 
-  "http://download.oracle.com/javase/6/docs/api/" (Eugene Koontz via camille) 
-  
+  ZOOKEEPER-1386. avoid flaky URL redirection in "ant javadoc" :
+  replace "http://java.sun.com/javase/6/docs/api/" with
+  "http://download.oracle.com/javase/6/docs/api/" (Eugene Koontz via camille)
+
   ZOOKEEPER-1354. AuthTest.testBadAuthThenSendOtherCommands fails
   intermittently (phunt via camille)
- 
+
   ZOOKEEPER-1277. servers stop serving when lower 32bits of zxid roll
   over (phunt)
 
@@ -348,37 +348,37 @@ BUGFIXES:
 
   ZOOKEEPER-1344. ZooKeeper client multi-update command is not
   considering the Chroot request (Rakesh R via phunt)
-  
+
   ZOOKEEPER-1307. zkCli.sh is exiting when an Invalid ACL exception is
   thrown from setACL command through client (Kavita Sharma via phunt)
-  
+
   ZOOKEEPER-1390. some expensive debug code not protected by a check
   for debug (breed via camille)
-  
+
   ZOOKEEPER-1406. dpkg init scripts don't restart - missing
   check_priv_sep_dir (Chris Beauchamp via phunt)
-   
+
   ZOOKEEPER-1403. zkCli.sh script quoting issue (James Page via phunt)
-   
+
   ZOOKEEPER-1384. test-cppunit overrides LD_LIBRARY_PATH and fails if
   gcc is in non-standard location (Jay Shrauner via phunt)
-  
+
   ZOOKEEPER-1419. Leader election never settles for a 5-node cluster
   (flavio via camille)
-  
+
   ZOOKEEPER-1256. ClientPortBindTest is failing on Mac OS X
   (Daniel Gómez Ferro via phunt)
 
   ZOOKEEPER-1433. improve ZxidRolloverTest (test seems flakey) (phunt via henryr)
 
   ZOOKEEPER-1395. node-watcher double-free redux (Mike Lundy via henryr)
-  
+
   ZOOKEEPER-1450. Backport of ZOOKEEPER-1294 fix to 3.4 and 3.3 (Norman Bishop via camille)
 
   ZOOKEEPER-1048. addauth command does not work in cli_mt/cli_st (allengao via michim)
 
   ZOOKEEPER-1339. C client doesn't build with --enable-debug (Eric Liang via michim)
-   
+
   ZOOKEEPER-1318. In Python binding, get_children (and get and exists, and probably others)
   with expired session doesn't raise exception properly (henryr via michim)
 
@@ -399,8 +399,8 @@ BUGFIXES:
 
   ZOOKEEPER-1471. Jute generates invalid C++ code
     (Michi Mutsuzaki via phunt)
-  
-  ZOOKEEPER-1465. Cluster availability following new leader election 
+
+  ZOOKEEPER-1465. Cluster availability following new leader election
     takes a long time with large datasets - is correlated to dataset size
     (fpj and Thawan Kooburat via camille)
 
@@ -460,7 +460,7 @@ IMPROVEMENTS:
   ZOOKEEPER-1497. Allow server-side SASL login with JAAS configuration
   to be programmatically set (rather than only by reading JAAS
   configuration file) (Matteo Bertozzi via phunt)
- 
+
   ZOOKEEPER-1437. Client uses session before SASL authentication complete.
   (Eugene Koontz via mahadev)
 
@@ -471,7 +471,7 @@ Release 3.4.3 - 2012-02-06
 
 Backward compatible changes:
 
-BUGFIXES: 
+BUGFIXES:
 
   ZOOKEEPER-1089. zkServer.sh status does not work due to invalid
   option of nc (Roman Shaposhnik via phunt)
@@ -480,10 +480,10 @@ BUGFIXES:
   Eclipse project files excluded (Harsh J via phunt)
 
   ZOOKEEPER-1343. getEpochToPropose should check if lastAcceptedEpoch is greater or equal than epoch (fpj via breed)
-  
-  ZOOKEEPER-1358. In StaticHostProviderTest.java, testNextDoesNotSleepForZero tests that hostProvider.next(0) 
+
+  ZOOKEEPER-1358. In StaticHostProviderTest.java, testNextDoesNotSleepForZero tests that hostProvider.next(0)
   doesn't sleep by checking that the latency of this call is less than 10sec (Alex Shraer via camille)
-  
+
   ZOOKEEPER-1351. invalid test verification in MultiTransactionTest (phunt via camille)
 
   ZOOKEEPER-973. bind() could fail on Leader because it does not
@@ -495,31 +495,31 @@ BUGFIXES:
   ZOOKEEPER-1353. C client test suite fails consistently.
   (Clint Byrum via mahadev)
 
-  ZOOKEEPER-1373. Hardcoded SASL login context name clashes with Hadoop security 
+  ZOOKEEPER-1373. Hardcoded SASL login context name clashes with Hadoop security
   configuration override. (Eugene Koontz and Thomas Weise via mahadev)
 
-  ZOOKEEPER-1352. server.InvalidSnapshotTest is using connection timeouts that 
+  ZOOKEEPER-1352. server.InvalidSnapshotTest is using connection timeouts that
   are too short. (phunt via mahadev)
 
-  ZOOKEEPER-1336. javadoc for multi is confusing, references functionality that doesn't 
+  ZOOKEEPER-1336. javadoc for multi is confusing, references functionality that doesn't
   seem to exist (phunt via mahadev)
 
-  ZOOKEEPER-1340. multi problem - typical user operations are 
+  ZOOKEEPER-1340. multi problem - typical user operations are
   generating ERROR level messages in the server (phunt via mahadev)
 
-  ZOOKEEPER-1374. C client multi-threaded test suite fails to 
+  ZOOKEEPER-1374. C client multi-threaded test suite fails to
   compile on ARM architectures. (James Page via mahadev)
 
   ZOOKEEPER-1337. multi's "Transaction" class is missing tests.
   (phunt and camille via mahadev)
 
-  ZOOKEEPER-1338. class cast exceptions may be thrown by multi 
+  ZOOKEEPER-1338. class cast exceptions may be thrown by multi
   ErrorResult class (invalid equals) (phunt via mahadev)
 
 IMPROVEMENTS:
- 
+
   ZOOKEEPER-1322. Cleanup/fix logging in Quorum code. (phunt via mahadev)
- 
+
   ZOOKEEPER-1327. there are still remnants of hadoop urls.
   (Harsh J via mahadev)
 
@@ -528,7 +528,7 @@ Release 3.4.2 - 2011-12-21
 
 Backward compatible changes:
 
-BUGFIXES: 
+BUGFIXES:
 
   ZOOKEEPER-1323. c client doesn't compile on freebsd
   (michi mutsuzaki via phunt)
@@ -540,7 +540,7 @@ Release 3.4.1 - 2011-12-12
 
 Backward compatible changes:
 
-BUGFIXES: 
+BUGFIXES:
 
   ZOOKEEPER-1311. ZooKeeper test jar is broken (Ivan Kelly via phunt)
 
@@ -553,27 +553,27 @@ BUGFIXES:
   ZOOKEEPER-1315. zookeeper_init always reports sessionPasswd=<hidden>.
   (Akira Kitada via mahadev)
 
-  ZOOKEEPER-1317. Possible segfault in zookeeper_init. 
+  ZOOKEEPER-1317. Possible segfault in zookeeper_init.
   (Akira Kitada via mahadev)
 
   ZOOKEEPER-1319. Missing data after restarting+expanding a cluster.
   (Patrick Hunt and Ben Reed via mahadev)
-  
-  ZOOKEEPER-1576. Zookeeper cluster - failed to connect to cluster if one of the 
+
+  ZOOKEEPER-1576. Zookeeper cluster - failed to connect to cluster if one of the
   provided IPs causes java.net.UnknownHostException (Edward Ribeiro via camille)
 
-  ZOOKEEPER-1269. Multi deserialization issues (Camille Fournier via 
+  ZOOKEEPER-1269. Multi deserialization issues (Camille Fournier via
   mahadev)
 
 Release 3.4.0 - 2011-10-25
 
 Non-backward compatible changes:
 
-BUGFIXES: 
+BUGFIXES:
 
 Backward compatible changes:
 
-BUGFIXES: 
+BUGFIXES:
 
   ZOOKEEPER-735. cppunit test testipv6 assumes that the machine is ipv6
   enabled. (mahadev)
@@ -589,7 +589,7 @@ BUGFIXES:
 
   ZOOKEEPER-631. zkpython's C code could do with a style clean-up
   (henry robinson via phunt)
-  
+
   ZOOKEEPER-746. learner outputs session id to log in dec (phunt via
   henryr)
 
@@ -613,7 +613,7 @@ BUGFIXES:
 
   ZOOKEEPER-737. some 4 letter words may fail with netcat (nc). (mahadev)
 
-  ZOOKEEPER-764. Observer elected leader due to inconsistent voting view 
+  ZOOKEEPER-764. Observer elected leader due to inconsistent voting view
   (henry via mahadev)
 
   ZOOKEEPER-763. Deadlock on close w/ zkpython / c client
@@ -637,17 +637,17 @@ BUGFIXES:
   (andrei savu via mahadev)
 
   ZOOKEEPER-783. committedLog in ZKDatabase is not properly synchronized
-  (henry via mahadev) 
+  (henry via mahadev)
 
-  ZOOKEEPER-790.  Last processed zxid set prematurely while establishing 
+  ZOOKEEPER-790.  Last processed zxid set prematurely while establishing
   leadership (flavio via mahadev)
 
-  ZOOKEEPER-795. eventThread isn't shutdown after a connection 
+  ZOOKEEPER-795. eventThread isn't shutdown after a connection
   "session expired" event coming (Sergey Doroshenko and Ben via mahadev)
 
   ZOOKEEPER-792. zkpython memory leak (Lei Zhang via henryr)
 
-  ZOOKEEPER-854. BookKeeper does not compile due to changes in the ZooKeeper 
+  ZOOKEEPER-854. BookKeeper does not compile due to changes in the ZooKeeper
   code (Flavio via mahadev)
 
   ZOOKEEPER-861. Missing the test SSL certificate used for running junit tests.
@@ -667,7 +667,7 @@ BUGFIXES:
 
   ZOOKEEPER-846. zookeeper client doesn't shut down cleanly on the close call
   (phunt)
-  
+
   ZOOKEEPER-804. c unit tests failing due to "assertion cptr failed" (michi
   mutsuzaki via mahadev)
 
@@ -709,7 +709,7 @@ BUGFIXES:
 
   ZOOKEEPER-897. C Client seg faults during close (jared cantwell via mahadev)
 
-  ZOOKEEPER-898. C Client might not cleanup correctly during close 
+  ZOOKEEPER-898. C Client might not cleanup correctly during close
   (jared cantwell via mahadev)
 
   ZOOKEEPER-907. Spurious "KeeperErrorCode = Session moved" messages (vishal k via breed)
@@ -748,7 +748,7 @@ BUGFIXES:
   ZOOKEEPER-976. ZooKeeper startup script doesn't use JAVA_HOME (phunt)
 
   ZOOKEEPER-994 "eclipse" target in the build script doesnot include
-  libraray required for test classes in the classpath (MIS via phunt) 
+  libraray required for test classes in the classpath (MIS via phunt)
 
   ZOOKEEPER-1013 zkServer.sh usage message should mention all startup options
   (eugene koontz via mahadev)
@@ -757,34 +757,34 @@ BUGFIXES:
 
   ZOOKEEPER-993. Code improvements (MIS via fpj)
 
-  ZOOKEEPER-1012. support distinct JVMFLAGS for zookeeper server in zkServer.sh 
+  ZOOKEEPER-1012. support distinct JVMFLAGS for zookeeper server in zkServer.sh
   and zookeeper client in zkCli.sh (Eugene Koontz via breed)
 
   ZOOKEEPER-880. QuorumCnxManager$SendWorker grows without bounds (vishal via breed)
 
-  ZOOKEEPER-1018. The connection permutation in get_addrs uses a weak and inefficient 
+  ZOOKEEPER-1018. The connection permutation in get_addrs uses a weak and inefficient
   shuffle (Stephen Tyree via breed)
- 
-  ZOOKEEPER-1028. In python bindings, zookeeper.set2() should return a stat dict but 
+
+  ZOOKEEPER-1028. In python bindings, zookeeper.set2() should return a stat dict but
   instead returns None. (Chris Medaglia and Ivan Kelly via mahadev)
 
   ZOOKEEPER-975. new peer goes in LEADING state even if ensemble is online. (vishal via fpj)
 
-  ZOOKEEPER-1049. Session expire/close flooding renders heartbeats to delay significantly. 
+  ZOOKEEPER-1049. Session expire/close flooding renders heartbeats to delay significantly.
   (chang song via mahadev)
-  
+
   ZOOKEEPER-1033. c client should install includes into INCDIR/zookeeper, not INCDIR/c-client-src
   (Nicholas Harteau via mahadev)
 
   ZOOKEEPER-1061. Zookeeper stop fails if start called twice. (Ted Dunning via mahadev)
 
   ZOOKEEPER-1059. stat command isses on non-existing node causes NPE. (Bhallamudi Kamesh via mahadev)
-  
+
   ZOOKEEPER-1058. fix typo in opToString for getData. (camille)
-  
-  ZOOKEEPER-1046. Creating a new sequential node results in a ZNODEEXISTS error. (Vishal K via camille) 
-  
-  ZOOKEEPER-1069. Calling shutdown() on a QuorumPeer too quickly can lead to a corrupt log. (Vishal K via camille) 
+
+  ZOOKEEPER-1046. Creating a new sequential node results in a ZNODEEXISTS error. (Vishal K via camille)
+
+  ZOOKEEPER-1069. Calling shutdown() on a QuorumPeer too quickly can lead to a corrupt log. (Vishal K via camille)
 
   ZOOKEEPER-1083. Javadoc for WatchedEvent not being generated. (Ivan Kelly via michim)
 
@@ -809,7 +809,7 @@ BUGFIXES:
   ZOOKEEPER-1046. Creating a new sequential node results in a ZNODEEXISTS error. (breed via camille)
 
   ZOOKEEPER-1097. Quota is not correctly rehydrated on snapshot reload (camille via henryr)
-  
+
   ZOOKEEPER-1046. Small fix: Creating a new sequential node results in a ZNODEEXISTS error. (Vishal K via camille)
 
   ZOOKEEPER-782. Incorrect C API documentation for Watches. (mahadev via breed)
@@ -820,32 +820,32 @@ BUGFIXES:
 
   ZOOKEEPER-1111. JMXEnv uses System.err instead of logging
   (Ivan Kelly via phunt)
-  
+
   ZOOKEEPER-1027. chroot not transparent in zoo_create() (Thijs Terlouw via
   mahadev)
-  
+
   ZOOKEEPER-1109. Zookeeper service is down when SyncRequestProcessor meets
   any exception. (Laxman via mahadev)
 
   ZOOKEEPER-1134. ClientCnxnSocket string comparison using == rather than equals.
-  (phunt via mahadev) 
+  (phunt via mahadev)
 
   ZOOKEEPER-1119. zkServer stop command incorrectly reading comment lines in
   zoo.cfg (phunt via mahadev)
 
   ZOOKEEPER-1090. Race condition while taking snapshot can lead to not restoring data tree correctly (Vishal K via breed)
 
-  ZOOKEEPER-1138. release audit failing for a number of new files. (phunt via mahadev) 
+  ZOOKEEPER-1138. release audit failing for a number of new files. (phunt via mahadev)
 
   ZOOKEEPER-1139. jenkins is reporting two warnings, fix these (phunt via mahadev)
 
   ZOOKEEPER-1142. incorrect stat output (phunt via mahadev)
-  
+
   ZOOKEEPER-1144. ZooKeeperServer not starting on leader due to a race condition (Vishal K via camille)
 
   ZOOKEEPER-839. deleteRecursive does not belong to the other methods.
    (mahadev)
- 
+
   ZOOKEEPER-1146. significant regression in client (c/python) performance.
   (phunt via mahadev)
 
@@ -856,7 +856,7 @@ BUGFIXES:
   (Eugene Koontz via mahadev)
 
   ZOOKEEPER-1141. zkpython fails tests under python 2.4. (phunt via mahadev)
-  
+
   ZOOKEEPER-1025. zkCli is overly sensitive to to spaces. (Laxman via camille)
 
   ZOOKEEPER-1117. zookeeper 3.3.3 fails to build with gcc >= 4.6.1 on
@@ -864,15 +864,15 @@ BUGFIXES:
 
   ZOOKEEPER-1140. server shutdown is not stopping threads. (laxman via mahadev)
 
-  ZOOKEEPER-1051. SIGPIPE in Zookeeper 0.3.* when send'ing after 
+  ZOOKEEPER-1051. SIGPIPE in Zookeeper 0.3.* when send'ing after
   cluster disconnection (Stephen Tyree via mahadev)
 
   ZOOKEEPER-1168. ZooKeeper fails to run with IKVM (Andrew Finnell via phunt)
 
   ZOOKEEPER-1165. better eclipse support in tests (Warren Turkal via phunt)
-  
+
   ZOOKEEPER-1154. Data inconsistency when the node(s) with the highest zxid is not present at the time of leader election. (Vishal Kathuria via camille)
-  
+
   ZOOKEEPER-1156. Log truncation truncating log too much - can cause data loss. (Vishal Kathuria via camille)
 
   ZOOKEEPER-1160. test timeouts are too small (breed via phunt)
@@ -880,24 +880,24 @@ BUGFIXES:
   ZOOKEEPER-731. Zookeeper#delete , #create - async versions miss a verb in the javadoc. (Thomas Koch via camille)
 
   ZOOKEEPER-1108. Various bugs in zoo_add_auth in C. (Dheeraj Agrawal via mahadev)
- 
-  ZOOKEEPER-981. Hang in zookeeper_close() in the multi-threaded C client. 
-  (Jeremy Stribling via mahadev) 
+
+  ZOOKEEPER-981. Hang in zookeeper_close() in the multi-threaded C client.
+  (Jeremy Stribling via mahadev)
 
   ZOOKEEPER-1125. Intermittent java core test failures. (Vishar Kher via mahadev)
 
   ZOOKEEPER-961. Watch recovery after disconnection when connection string contains a prefix.
   (Matthias Spycher via mahadev)
 
-  ZOOKEEPER-1136. NEW_LEADER should be queued not sent to match the Zab 1.0 protocol 
+  ZOOKEEPER-1136. NEW_LEADER should be queued not sent to match the Zab 1.0 protocol
   on the twiki (breed via mahadev)
 
-  ZOOKEEPER-1189. For an invalid snapshot file(less than 10bytes size) RandomAccessFile 
+  ZOOKEEPER-1189. For an invalid snapshot file(less than 10bytes size) RandomAccessFile
   stream is leaking. (Rakesh R via mahadev)
 
   ZOOKEEPER-1185. Send AuthFailed event to client if SASL authentication fails.
   (Eugene Kuntz via mahadev)
-  
+
   ZOOKEEPER-1174. FD leak when network unreachable (Ted Dunning via camille)
 
   ZOOKEEPER-1203. Zookeeper systest is missing Junit Classes
@@ -914,40 +914,40 @@ BUGFIXES:
 
   ZOOKEEPER-1181. Fix problems with Kerberos TGT renewal.
   (Eugene Koontz via mahadev)
-  
+
   ZOOKEEPER-1264. FollowerResyncConcurrencyTest failing intermittently. (phunt via camille)
 
-  ZOOKEEPER-1268. problems with read only mode, intermittent test failures 
+  ZOOKEEPER-1268. problems with read only mode, intermittent test failures
   and ERRORs in the log. (phunt via mahadev)
-  
+
   ZOOKEEPER-1246. Dead code in PrepRequestProcessor catch Exception block. (camille)
 
   ZOOKEEPER-1271. testEarlyLeaderAbandonment failing on solaris -
   clients not retrying connection (mahadev via phunt)
 
-  ZOOKEEPER-1192. Leader.waitForEpochAck() checks waitingForNewEpoch instead 
+  ZOOKEEPER-1192. Leader.waitForEpochAck() checks waitingForNewEpoch instead
   of checking electionFinished (Alexander Shraer via mahadev)
 
-  ZOOKEEPER-1270. testEarlyLeaderAbandonment failing intermittently, 
+  ZOOKEEPER-1270. testEarlyLeaderAbandonment failing intermittently,
   quorum formed, no serving. (Flavio, Camille and Alexander Shraer via mahadev)
-  
-  ZOOKEEPER-1264. FollowerResyncConcurrencyTest failing 
+
+  ZOOKEEPER-1264. FollowerResyncConcurrencyTest failing
   intermittently. (breed, camille and Alex Shraer via camille)
-  
-  ZOOKEEPER-1282. Learner.java not following Zab 1.0 protocol - 
-  setCurrentEpoch should be done upon receipt of NEWLEADER 
+
+  ZOOKEEPER-1282. Learner.java not following Zab 1.0 protocol -
+  setCurrentEpoch should be done upon receipt of NEWLEADER
   (before acking it) and not upon receipt of UPTODATE (breed via camille)
-  
+
   ZOOKEEPER-1291. AcceptedEpoch not updated at leader before it proposes the epoch to followers. (Alex Shraer via camille)
 
   ZOOKEEPER-1208. Ephemeral node not removed after the client session is long gone. (phunt via camille)
-  
+
   ZOOKEEPER-1239. add logging/stats to identify fsync stalls. (phunt via camille)
-  
+
   ZOOKEEPER-1299. Add winconfig.h file to ignore in release audit. (mahadev)
 
 IMPROVEMENTS:
-  ZOOKEEPER-724. Improve junit test integration - log harness information 
+  ZOOKEEPER-724. Improve junit test integration - log harness information
   (phunt via mahadev)
 
   ZOOKEEPER-766. forrest recipes docs don't mention the lock/queue recipe
@@ -1025,7 +1025,7 @@ IMPROVEMENTS:
 
   ZOOKEEPER-1094. Small improvements to LeaderElection and Vote classes (henryr via breed)
 
-  ZOOKEEPER-1074. zkServer.sh is missing nohup/sleep, which are necessary 
+  ZOOKEEPER-1074. zkServer.sh is missing nohup/sleep, which are necessary
   for remote invocation. (phunt via mahadev)
 
   ZOOKEEPER-965. Need a multi-update command to allow multiple znodes to be updated safely (Marshall McMullen and Ted Dunning via breed)
@@ -1039,11 +1039,11 @@ IMPROVEMENTS:
 
   ZOOKEEPER-1143. quorum send & recv workers are missing thread names
   (phunt via mahadev)
-  
+
   ZOOKEEPER-1104. CLONE - In QuorumTest, use the same "for ( .. try { break }
-  catch { } )" pattern in testFollowersStartAfterLeaders as in testSessionMove. 
+  catch { } )" pattern in testFollowersStartAfterLeaders as in testSessionMove.
   (Eugene Koontz via mahadev)
- 
+
   ZOOKEEPER-1034. perl bindings should automatically find the zookeeper
   c-client headers (nicholas harteau via mahadev)
 
@@ -1055,8 +1055,8 @@ IMPROVEMENTS:
   ZOOKEEPER-1171. fix build for java 7 (phunt via mahadev)
 
   ZOOKEEPER-1201. Clean SaslServerCallbackHandler.java. (Thomas Koch
-  via mahadev) 
-  
+  via mahadev)
+
   ZOOKEEPER-1321. Add number of client connections metric in JMX and srvr. (Neha Narkhede via camille)
 
 NEW FEATURES:
@@ -1090,7 +1090,7 @@ NEW FEATURES:
   ZOOKEEPER-784. Server-side functionality for read-only mode (Sergey Doroshenko via henryr)
 
   ZOOKEEPER-992. MT Native Version of Windows C Client (Dheeraj Agrawal via michim)
- 
+
   ZOOKEEPER-938. Support Kerberos authentication of clients. (Eugene Koontz
   via mahadev)
 
@@ -1102,16 +1102,16 @@ NEW FEATURES:
 
 DEPRECATION:
   ZOOKEEPER-1153. Deprecate AuthFLE and LE. (Flavio Junqueira via mahadev)
-  
+
 Release 3.3.0 - 2010-03-24
 
 Non-backward compatible changes:
 
-BUGFIXES: 
+BUGFIXES:
 
 Backward compatible changes:
 
-BUGFIXES: 
+BUGFIXES:
   ZOOKEEPER-59. Synchronized block in NIOServerCnxn (fpj via breed)
 
   ZOOKEEPER-524. DBSizeTest is not really testing anything (breed)
@@ -1165,9 +1165,9 @@ BUGFIXES:
   (phunt)
 
   ZOOKEEPER-501. CnxManagerTest failed on hudson. (flavio via mahadev)
-  
+
   ZOOKEEPER-499. electionAlg should default to FLE (3) - regression
-  (phunt via mahadev) 
+  (phunt via mahadev)
 
   ZOOKEEPER-477. zkCleanup.sh is flaky (fernando via mahadev)
 
@@ -1182,7 +1182,7 @@ BUGFIXES:
 
   ZOOKEEPER-533.  ant error running clean twice (phunt via mahadev)
 
-  ZOOKEEPER-535. ivy task does not enjoy being defined twice 
+  ZOOKEEPER-535. ivy task does not enjoy being defined twice
   (build error) (phunt via mahadev)
 
   ZOOKEEPER-420. build/test should not require install in zkpython
@@ -1205,7 +1205,7 @@ BUGFIXES:
   ZOOKEEPER-512. FLE election fails to elect leader (flavio via mahadev)
 
   ZOOKEEPER-563. ant test for recipes is broken. (mahadev via phunt)
- 
+
   ZOOKEEPER-562. c client can flood server with pings if tcp send queue
   filled. (ben reed via mahadev)
 
@@ -1245,7 +1245,7 @@ BUGFIXES:
   ZOOKEEPER-597. ASyncHammerTest is failing intermittently on hudson trunk
   (Patrick Hunt via mahadev)
 
-  ZOOKEEPER-598. LearnerHandler is misspelt in the thread's constructor 
+  ZOOKEEPER-598. LearnerHandler is misspelt in the thread's constructor
   (Henry Robinson via fpj)
 
   ZOOKEEPER-597. ASyncHammerTest is failing intermittently on hudson trunk (take 2)
@@ -1257,7 +1257,7 @@ BUGFIXES:
   ZOOKEEPER-597. ASyncHammerTest is failing intermittently on hudson trunk
   (take 4) (breed via mahadev)
 
-  ZOOKEEPER-597. ASyncHammerTest is failing intermittently on hudson trunk 
+  ZOOKEEPER-597. ASyncHammerTest is failing intermittently on hudson trunk
   (take 5) (mahadev)
 
   ZOOKEEPER-611.  hudson build failiure (mahadev)
@@ -1267,7 +1267,7 @@ BUGFIXES:
   ZOOKEEPER-615. wrong javadoc for create with a sequence flag
   (mahadev via breed)
 
-  ZOOKEEPER-588. remove unnecessary/annoying log of tostring error in 
+  ZOOKEEPER-588. remove unnecessary/annoying log of tostring error in
   Request.toString() (phunt via breed)
 
   ZOOKEEPER-587.  client should log timeout negotiated with server
@@ -1277,7 +1277,7 @@ BUGFIXES:
   (phunt via henry)
 
   ZOOKEEPER-614. Improper synchronisation in getClientCnxnCount
-  (henry via mahadev) 
+  (henry via mahadev)
 
   ZOOKEEPER-609. ObserverTest failure "zk should not be connected expected not
   same" (henry robinson via phunt)
@@ -1300,12 +1300,12 @@ BUGFIXES:
   cause problems in leader election if data gets corrupted. (mahadev)
 
   ZOOKEEPER-637. Trunk build is failing (fpj via breed)
-  
+
   ZOOKEEPER-637. Trunk build is failing - second patch (breed via fpj)
 
   ZOOKEEPER-644. Nightly build failed on hudson. (pat via mahadev)
 
-  ZOOKEEPER-651: Log exception trace in QuorumCnxManager.SendWorker 
+  ZOOKEEPER-651: Log exception trace in QuorumCnxManager.SendWorker
   (flavio via henry)
 
   ZOOKEEPER-608. Receipt of ACK from observer should not be logged as ERROR
@@ -1332,10 +1332,10 @@ BUGFIXES:
 
   ZOOKEEPER-672. typo nits across documentation (Kay Kay via mahadev)
 
-  ZOOKEEPER-668. Close method in LedgerInputStream doesn't do anything (flavio 
+  ZOOKEEPER-668. Close method in LedgerInputStream doesn't do anything (flavio
   via mahadev)
 
-  ZOOKEEPER-569. Failure of elected leader can lead to never-ending leader 
+  ZOOKEEPER-569. Failure of elected leader can lead to never-ending leader
   election (henry via flavio)
 
   ZOOKEEPER-669. watchedevent tostring should clearly output the
@@ -1357,7 +1357,7 @@ BUGFIXES:
   ZOOKEEPER-689.  release build broken - ivysettings.xml not copied during
   "package" (phunt via mahadev)
 
-  ZOOKEEPER-59. Synchronized block in NIOServerCnxn (flavio via mahadev) 
+  ZOOKEEPER-59. Synchronized block in NIOServerCnxn (flavio via mahadev)
 
   ZOOKEEPER-691. Interface changed for NIOServer.Factory (breed via mahadev)
 
@@ -1369,7 +1369,7 @@ BUGFIXES:
   ZOOKEEPER-693. TestObserver stuck in tight notification loop in FLE
   (flavio via phunt)
 
-  ZOOKEEPER-696. NPE in the hudson logs, seems nioservercnxn closed twice 
+  ZOOKEEPER-696. NPE in the hudson logs, seems nioservercnxn closed twice
   (phunt via mahadev)
 
   ZOOKEEPER-511. bad error handling in FollowerHandler.sendPackets
@@ -1421,15 +1421,15 @@ BUGFIXES:
 IMPROVEMENTS:
   ZOOKEEPER-473. cleanup junit tests to eliminate false positives due to
   "socket reuse" and failure to close client (phunt via mahadev)
- 
+
   ZOOKEEPER-488. Fix zkServer.sh to add clover.jar in classpath
-  (Giridharan Kesavan via gkesavan)  
+  (Giridharan Kesavan via gkesavan)
 
   ZOOKEEPER-516. add support for 10 minute test ie "pre-commit" test (phunt)
 
   ZOOKEEPER-529. Use Ivy to pull dependencies and also generate pom (phunt
   via mahadev)
-  
+
   ZOOKEEPER-530. Memory corruption: Zookeeper c client IPv6 implementation
   does not honor struct sockaddr_in6 size (isabel drost via mahadev)
 
@@ -1526,19 +1526,19 @@ NEW FEATURES:
   zookeeper instance (Colin Goodheart-Smithe via phunt)
 
   ZOOKEEPER-635. Server supports listening on a specified network address (phunt via breed)
-  
+
 Release 3.2.0 - 2009-06-30
 
 Non-backward compatible changes:
 
-BUGFIXES: 
+BUGFIXES:
   ZOOKEEPER-444. perms definition for PERMS_ALL differ in C and java (mahadev)
 
 Backward compatible changes:
 
-BUGFIXES: 
+BUGFIXES:
   ZOOKEEPER-303. Bin scripts dont work on a Mac. (tom white via mahadev)
-  
+
   ZOOKEEPER-330. zookeeper standalone server does not startup with just a
   port and datadir. (chris darroch and mahadev)
 
@@ -1561,11 +1561,11 @@ BUGFIXES:
 
   ZOOKEEPER-309. core dump using zoo_get_acl() (mahadev via phunt)
 
-  ZOOKEEPER-341.  regression in QuorumPeerMain, 
+  ZOOKEEPER-341.  regression in QuorumPeerMain,
   tickTime from config is lost, cannot start quorum (phunt via mahadev)
 
   ZOOKEEPER-360. WeakHashMap in Bookie.java causes NPE (flavio via mahadev)
-  
+
   ZOOKEEPER-362. Issues with FLENewEpochTest. (fix bug in Fast leader election)
   (flavio via mahadev)
 
@@ -1579,7 +1579,7 @@ BUGFIXES:
   ZOOKEEPER-355. make validatePath non public in Zookeeper client api.
   (phunt via mahadev)
 
-  ZOOKEEPER-374. Uninitialized struct variable in C causes warning which 
+  ZOOKEEPER-374. Uninitialized struct variable in C causes warning which
   is treated as an error (phunt via mahadev)
 
   ZOOKEEPER-337. improve logging in leader election lookForLeader method when
@@ -1591,7 +1591,7 @@ BUGFIXES:
   ZOOKEEPER-346. remove the kill command fro mthe client port.
   (phunt via mahadev)
 
-  ZOOKEEPER-377. running ant cppunit tests, a failure still results in 
+  ZOOKEEPER-377. running ant cppunit tests, a failure still results in
   BUILD SUCCESSFUL (giri via mahadev)
 
   ZOOKEEPER-382. zookeeper cpp tests fails on 64 bit machines with gcc 4.1.2
@@ -1609,7 +1609,7 @@ BUGFIXES:
 
   ZOOKEEPER-410. address all findbugs warnings in client/server classes.
   (phunt via breed)
-  
+
   ZOOKEEPER-403. cleanup javac compiler warnings. (flavio via breed)
 
   ZOOKEEPER-407. address all findbugs warnings in
@@ -1628,7 +1628,7 @@ BUGFIXES:
 
   ZOOKEEPER-192.  trailing whitespace in config file can cause number format
   exceptions (phunt via breed)
- 
+
   ZOOKEEPER-409. address all findbugs warnings in jute related classes
   (phunt via breed)
 
@@ -1706,41 +1706,41 @@ IMPROVEMENTS:
   (giridharan kesavan via mahadev)
 
   ZOOKEEPER-353. javadoc warnings needs to be fixed.
-  (giridharan kesavan via mahadev) 
+  (giridharan kesavan via mahadev)
 
   ZOOKEEPER-354.  to fix javadoc warning in the source files. (mahadev)
 
   ZOOKEEPER-349. to automate patch testing. (giridharan kesavan via mahadev)
 
   ZOOKEEPER-288. Cleanup and fixes to BookKeeper (flavio via mahadev)
- 
+
   ZOOKEEPER-305.  Replace timers with semaphores in FLENewEpochTest.
   (flavio via mahadev)
 
   ZOOKEEPER-60. Get cppunit tests running as part of Hudson CI.
   (girish via mahadev)
 
-  ZOOKEEPER-343. add tests that specifically verify the zkmain and 
+  ZOOKEEPER-343. add tests that specifically verify the zkmain and
   qpmain classes. (phunt via mahadev)
 
   ZOOKEEPER-361. integrate cppunit testing as part of hudson patch process.
   (giri via mahadev)
 
-  ZOOKEEPER-373. One thread per bookie (flavio via mahadev) 
+  ZOOKEEPER-373. One thread per bookie (flavio via mahadev)
 
   ZOOKEEPER-384. keeper exceptions missing path (phunt via mahadev)
 
   ZOOKEEPER-380. bookkeeper should have a streaming api so that its easier to
   store checpoints/snapshots in bookkeeper. (mahadev via flavio)
- 
+
   ZOOKEEPER-389. add help/usage to the c shell cli.c (phunt via mahadev)
 
   ZOOKEEPER-376. ant test target re-compiles cppunit code every time
   (phunt via mahadev)
 
   ZOOKEEPER-391. bookeeper mainline code should not be calling
-  printStackTrace. (flavio via mahadev) 
- 
+  printStackTrace. (flavio via mahadev)
+
   ZOOKEEPER-300. zk jmx code is calling printStackTrace when creating bean
   name (should not be) (phunt via mahadev)
 
@@ -1771,7 +1771,7 @@ IMPROVEMENTS:
 
   ZOOKEEPER-336. single bad client can cause server to stop accepting
   connections (henry robinson via breed)
- 
+
   ZOOKEEPER-434. the java shell should indicate connection status on command
   prompt (henry robinson via breed)
 
@@ -1813,7 +1813,7 @@ NEW FEATURES:
   ZOOKEEPER-78. added a high level protocol/feature - for easy Leader
   Election or exclusive Write Lock creation (mahadev via phunt)
 
-  ZOOKEEPER-29. Flexible quorums (flavio via mahadev) 
+  ZOOKEEPER-29. Flexible quorums (flavio via mahadev)
 
   ZOOKEEPER-378. perl binding for zookeeper (chris darroch via mahadev)
 
@@ -1827,25 +1827,25 @@ NEW FEATURES:
 
 
 Release 3.1.0 - 2009-02-06
-  
+
 Non-backward compatible changes:
 
-BUGFIXES: 
+BUGFIXES:
 
   ZOOKEEPER-255. zoo_set() api does not return stat datastructure.
   (avery ching via mahadev)
-  
-  ZOOKEEPER-246. review error code definition in both source and docs. 
+
+  ZOOKEEPER-246. review error code definition in both source and docs.
   (pat via mahadev)
 
 Backward compatible changes:
 
-BUGFIXES: 
+BUGFIXES:
   ZOOKEEPER-211. Not all Mock tests are working (ben via phunt)
 
   ZOOKEEPER-223. change default level in root logger to INFO.
-  (pat via mahadev) 
-   
+  (pat via mahadev)
+
   ZOOKEEPER-212. fix the snapshot to be asynchronous. (mahadev and ben)
 
   ZOOKEEPER-213. fix programmer guide C api docs to be  in sync with latest
@@ -1853,25 +1853,25 @@ BUGFIXES:
 
   ZOOKEEPER-219. fix events.poll timeout in watcher test to be longer.
   (pat via mahadev)
-   
+
   ZOOKEEPER-217. Fix errors in config to be thrown as Exceptions. (mahadev)
 
   ZOOKEEPER-228. fix apache header missing in DBTest. (mahadev)
 
   ZOOKEEPER-218. fix the error in the barrier example code. (pat via mahadev)
 
-  ZOOKEEPER-206. documentation tab should contain the version number and 
-  other small site changes. (pat via mahadev) 
+  ZOOKEEPER-206. documentation tab should contain the version number and
+  other small site changes. (pat via mahadev)
 
   ZOOKEEPER-226. fix exists calls that fail on server if node has null data.
-  (mahadev) 
+  (mahadev)
 
   ZOOKEEPER-204. SetWatches needs to be the first message after auth
   messages to the server (ben via mahadev)
-  
+
   ZOOKEEPER-208. Zookeeper C client uses API that are not thread safe,
   causing crashes when multiple instances are active.
-  (austin shoemaker, chris daroch and ben reed via mahadev) 
+  (austin shoemaker, chris daroch and ben reed via mahadev)
 
   ZOOKEEPER-227. gcc warning from recordio.h (chris darroch via mahadev)
 
@@ -1894,7 +1894,7 @@ BUGFIXES:
 
   ZOOKEEPER-250. isvalidsnapshot should handle the case of 0 snapshot
   files better. (mahadev via phunt)
- 
+
   ZOOKEEPER-265. remove (deprecate) unused NoSyncConnected from KeeperState.
   (phunt via mahadev)
 
@@ -1906,17 +1906,17 @@ and runping via mahadev)
   ZOOKEEPER-267.  java client incorrectly generating syncdisconnected event when in disconnected state. (pat via breed)
 
   ZOOKEEPER-263. document connection host:port as comma separated list in forrest docs (pat via breed)
-  
+
   ZOOKEEPER-275. Bug in FastLeaderElection. (flavio via mahadev)
 
   ZOOKEEPER-272. getchildren can fail for large number of children. (mahadev)
 
-  ZOOKEEPER-16. Need to do path validation. (pat, mahadev) 
+  ZOOKEEPER-16. Need to do path validation. (pat, mahadev)
 
   ZOOKEEPER-252. PurgeTxnLog is not handling the new dataDir directory
   structure (mahadev via phunt)
 
-  ZOOKEEPER-291. regression for legacy code using KeeperException.Code 
+  ZOOKEEPER-291. regression for legacy code using KeeperException.Code
   constants (due to 246). (pat via mahadev)
 
   ZOOKEEPER-255. zoo_set() api does not return stat datastructure.
@@ -1928,16 +1928,16 @@ signature), fix this by adding zoo_set2 (pat via mahadev)
   ZOOKEEPER-302. Quote values in JMX objectnames. (tom and pat via mahadev)
 
 IMPROVEMENTS:
-   
+
   ZOOKEEPER-64. Log system env information when initializing server and
   client (pat via mahadev)
 
   ZOOKEEPER-243. add SEQUENCE flag documentation to the programming guide.
   (patrick hunt via mahadev)
-  
+
    ZOOKEEPER-161. Content needed: "Designing a ZooKeeper Deployment"
   (breed via phunt)
-   
+
    ZOOKEEPER-247. fix formatting of C API in ACL section of programmer guide.
    (patrick hunt via mahadev)
 
@@ -1947,8 +1947,8 @@ IMPROVEMENTS:
    detailing connection parameters. (pat via mahadev)
 
    ZOOKEEPER-222.  print C client log message timestamp in human readable
-   form. (pat via mahadev) 
-  
+   form. (pat via mahadev)
+
    ZOOKEEPER-256. support use of JMX to manage log4j configuration at runtime.
    (pat via mahadev)
 
@@ -1967,9 +1967,9 @@ IMPROVEMENTS:
    and messages generated. (phunt via breed)
 
    ZOOKEEPER-210. Require Java 6. (phunt via breed)
-    
+
    ZOOKEEPER-177.  needed: docs for JMX (phunt via mahadev)
-  
+
    ZOOKEEPER-253. documentation of DataWatcher state transition is misleading
 regarding auto watch reset on reconnect. (phunt via mahadev)
 
@@ -1985,18 +1985,18 @@ flavio via mahadev)
    cleanup datadir (snaps/logs) (mahadev via phunt)
 
    ZOOKEEPER-69. ZooKeeper logo
-   
+
    ZOOKEEPER-286. Make GenerateLoad use InstanceContainers. (breed via mahadev)
 
    ZOOKEEPER-220. programming guide watches section should clarify
    server/clientlib role in data/child watch maint. (breed via phunt)
- 
+
    ZOOKEEPER-289. add debug messages to nioserver select loop. (mahadev)
 
 NEW FEATURES:
 
    ZOOKEEPER-276. Bookkeeper contribution (Flavio and Luca Telloli via mahadev)
-  
+
    ZOOKEEPER-231. Quotas in ZooKeeper. (mahadev)
 
 Release 3.0.0 - 2008-10-21
@@ -2005,7 +2005,7 @@ Non-backward compatible changes:
 
   ZOOKEEPER-43. Server side of auto reset watches. (breed via mahadev)
 
-  ZOOKEEPER-132. Create Enum to replace CreateFlag in ZooKepper.create 
+  ZOOKEEPER-132. Create Enum to replace CreateFlag in ZooKepper.create
   method (Jakob Homan via phunt)
 
   ZOOKEEPER-139. Create Enums for WatcherEvent's KeeperState and EventType
@@ -2033,10 +2033,10 @@ Non-backward compatible changes:
 
   ZOOKEEPER-33. Better ACL management
   (mahadev)
-   
+
 Backward compatible changes:
 
-  BUGFIXES: 
+  BUGFIXES:
 
   ZOOKEEPER-203. fix datadir typo in releasenotes (phunt)
 
@@ -2099,13 +2099,13 @@ Backward compatible changes:
 
   ZOOKEEPER-17. zookeeper_init doc needs clarification (phunt)
 
-  ZOOKEEPER-181. Some Source Forge Documents did not get moved over: 
+  ZOOKEEPER-181. Some Source Forge Documents did not get moved over:
   javaExample, zookeeperTutorial, zookeeperInternals (robbie via phunt)
 
   ZOOKEEPER-180. Placeholder sections needed in document for new topics that
   the umbrella jira discusses (robbie via phunt)
 
-  ZOOKEEPER-179. Programmer's Guide "Basic Operations" section is missing 
+  ZOOKEEPER-179. Programmer's Guide "Basic Operations" section is missing
   content (robbie via phunt)
 
   ZOOKEEPER-178. FLE test. (Flavio Paiva Junqueira)
@@ -2142,7 +2142,7 @@ Backward compatible changes:
 
   ZOOKEEPER-21. Improve zk ctor/watcher (state transition) docs (phunt)
 
-  ZOOKEEPER-142. Provide Javadoc as to the maximum size of the data byte 
+  ZOOKEEPER-142. Provide Javadoc as to the maximum size of the data byte
   array that may be stored within a znode (Jakob Homan via phunt)
 
   ZOOKEEPER-93. Create Documentation for Zookeeper (phunt)
@@ -2157,13 +2157,13 @@ Backward compatible changes:
   ZOOKEEPER-130. update build.xml to support apache release process
   (phunt via mahadev)
 
-  ZOOKEEPER-118. findbugs flagged switch statement in 
+  ZOOKEEPER-118. findbugs flagged switch statement in
   followerrequestprocessor.run() (Flavio Paiva Junqueira via phunt)
 
   ZOOKEEPER-115. Potential NPE in QuorumCnxManager
   (Flavio Paiva Junqueira)
 
-  ZOOKEEPER-114. cleanup ugly event messages in zookeeper client 
+  ZOOKEEPER-114. cleanup ugly event messages in zookeeper client
   (Jakob Homan)
 
   ZOOKEEPER-112. src/java/main ZooKeeper.java has test code embedded into it.
@@ -2177,20 +2177,20 @@ Backward compatible changes:
 
   ZOOKEEPER-101. Integrate ZooKeeper with "violations" feature on hudson
   (phunt)
- 
-  ZOOKEEPER-105. Catch Zookeeper exceptions and print on the stderr. 
+
+  ZOOKEEPER-105. Catch Zookeeper exceptions and print on the stderr.
   (Anthony Urso via Mahadev)
- 
+
   ZOOKEEPER-42. Change Leader Election to fast tcp. (Flavio Paiva Junqueira
   via phunt)
 
   ZOOKEEPER-48. auth_id now handled correctly when no auth ids present
   (Benjamin Reed via phunt)
- 
+
   ZOOKEEPER-44. Create sequence flag children with prefixes of 0's so that
   they can be lexicographically sorted. (Jakob Homan via mahadev)
-  
-  ZOOKEEPER-108. Fix sync operation reordering on a Quorum. 
+
+  ZOOKEEPER-108. Fix sync operation reordering on a Quorum.
   (Flavio Paiva Junqueira via Mahadev)
 
   ZOOKEEPER-25. Fuse module for Zookeeper. (Swee Lim, Bart, Patrick Hunt and
@@ -2201,13 +2201,13 @@ Backward compatible changes:
   ZOOKEEPER-56. Add clover support to build.xml. (Patrick Hunt via mahadev)
 
   ZOOKEEPER-75. register the ZooKeeper mailing lists with nabble.com (phunt)
-  
+
   ZOOKEEPER-54. remove sleeps in the tests. (phunt)
 
-  ZOOKEEPER-55. build.xml failes to retrieve a release number from SVN and 
+  ZOOKEEPER-55. build.xml failes to retrieve a release number from SVN and
   the ant target "dist" fails (Andrew Kornev)
 
-  ZOOKEEPER-89. invoke WhenOwnerListener.whenNotOwner() when the ZK 
+  ZOOKEEPER-89. invoke WhenOwnerListener.whenNotOwner() when the ZK
   connection fails (james strachan)
 
   ZOOKEEPER-90. invoke WhenOwnerListener.whenNotOwner() when the ZK
@@ -2216,22 +2216,22 @@ Backward compatible changes:
   ZOOKEEPER-82. Make the ZooKeeperServer more DI friendly. (Hiram Chirino via
   mahadev)
 
-  ZOOKEEPER-110. Build script relies on svnant, which is not compatible 
+  ZOOKEEPER-110. Build script relies on svnant, which is not compatible
   with subversion 1.5 working copies (Jakob Homan)
 
   ZOOKEEPER-111. Significant cleanup of existing tests. (Patrick Hunt via
   mahadev)
- 
+
   ZOOKEEPER-122. Fix  NPE in jute's Utils.toCSVString. (Anthony Urso via
   mahadev)
-  
+
  ZOOKEEPER-123. Fix  the wrong class is specified for the logger. (Jakob Homan
  via mahadev)
 
  ZOOKEEPER-2. Fix synchronization issues in QuorumPeer and FastLeader
  election. (Flavio Paiva Junqueira via mahadev)
 
- ZOOKEEPER-125. Remove unwanted class declaration in FastLeaderElection. 
+ ZOOKEEPER-125. Remove unwanted class declaration in FastLeaderElection.
  (Flavio Paiva Junqueira via mahadev)
 
  ZOOKEEPER-61. Address (remove) use of sleep(#) in client/server test cases.
@@ -2242,14 +2242,14 @@ Backward compatible changes:
  ZOOKEEPER-109. cleanup of NPE and Resource issue nits found by static
  analysis (phunt)
 
- ZOOKEEPER-76. Commit 677109 removed the cobertura library, but not the 
+ ZOOKEEPER-76. Commit 677109 removed the cobertura library, but not the
  build targets. (phunt)
 
  ZOOKEEPER-63. Race condition in client close() operation. (phunt via breed)
 
  ZOOKEEPER-70. Add skeleton forrest doc structure for ZooKeeper (phunt)
 
- ZOOKEEPER-79. Document jacob's leader election on the wiki recipes page 
+ ZOOKEEPER-79. Document jacob's leader election on the wiki recipes page
  (Flavio Junqueira)
 
  ZOOKEEPER-73. Move ZK wiki from SourceForge to Apache (phunt)
@@ -2261,7 +2261,7 @@ Backward compatible changes:
  ZOOKEEPER-68. parseACLs in ZooKeeper.java fails to parse elements of ACL,
  should be lastIndexOf rather than IndexOf (mahadev)
 
- ZOOKEEPER-130. update build.xml to support apache release process. 
+ ZOOKEEPER-130. update build.xml to support apache release process.
  (phunt via mahadev)
 
  ZOOKEEPER-131. Fix Old leader election can elect a dead leader over and over
