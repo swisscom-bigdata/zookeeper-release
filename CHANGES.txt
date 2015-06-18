@@ -17,6 +17,9 @@ BUGFIXES:
   ZOOKEEPER-2146 BinaryInputArchive readString should check length before
   allocating memory (Hongchao Deng via michim)
 
+  ZOOKEEPER-602: log all exceptions not caught by ZK threads
+  (Rakesh R via rgs)
+
 IMPROVEMENTS:
 
   ZOOKEEPER-1575. adding .gitattributes to prevent CRLF and LF mismatches for
