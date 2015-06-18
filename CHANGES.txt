@@ -18,6 +18,9 @@ BUGFIXES:
   ZOOKEEPER-1256: ClientPortBindTest is failing on Mac OS X
   (Camille via phunt)
 
+  ZOOKEEPER-602: log all exceptions not caught by ZK threads
+  (Rakesh R via rgs)
+
 IMPROVEMENTS:
 
   ZOOKEEPER-1575. adding .gitattributes to prevent CRLF and LF mismatches for

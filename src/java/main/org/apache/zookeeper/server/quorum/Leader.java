@@ -22,7 +22,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.BindException;
-import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
@@ -42,10 +41,10 @@ import java.util.concurrent.atomic.AtomicLong;
 import javax.security.sasl.SaslException;
 
 import org.apache.jute.BinaryOutputArchive;
-import org.apache.zookeeper.server.ZooKeeperServer;
 import org.apache.zookeeper.server.FinalRequestProcessor;
 import org.apache.zookeeper.server.Request;
 import org.apache.zookeeper.server.RequestProcessor;
+import org.apache.zookeeper.server.ZooKeeperThread;
 import org.apache.zookeeper.server.quorum.QuorumPeer.LearnerType;
 import org.apache.zookeeper.server.quorum.flexible.QuorumVerifier;
 import org.apache.zookeeper.server.util.ZxidUtils;
@@ -305,9 +304,13 @@ public class Leader {
 
     Proposal newLeaderProposal = new Proposal();
     
-    class LearnerCnxAcceptor extends Thread{
+    class LearnerCnxAcceptor extends ZooKeeperThread{
         private volatile boolean stop = false;
-        
+
+        public LearnerCnxAcceptor() {
+            super("LearnerCnxAcceptor-" + ss.getLocalSocketAddress());
+        }
+
         @Override
         public void run() {
             try {
