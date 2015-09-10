@@ -1,0 +1,24 @@
+<project name="Zookeeper sonar" default="all" basedir="." xmlns:sonar="antlib:org.sonar.ant">
+  
+<import file="${basedir}/build.xml"/>
+<!-- Define the SonarQube global properties (the most usual way is to pass these properties via the command line) -->
+<property name="sonar.jdbc.url" value="jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8" />
+<property name="sonar.jdbc.username" value="sonar" />
+<property name="sonar.jdbc.password" value="sonar" />
+ 
+<!-- Define the SonarQube project properties -->
+<property name="sonar.projectKey" value="org.apache.zookeeper:zookeeper" />
+<property name="sonar.projectName" value="Apache Zookeeper" />
+<property name="sonar.projectVersion" value="1.0" />
+<property name="sonar.language" value="java" />
+<property name="sonar.sources" value="src" />
+<property name="sonar.binaries" value="${basedir}/build/" />
+ 
+<!-- Define the SonarQube target -->
+<target name="sonar">
+    <taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml"/>
+ 
+    <!-- Execute the SonarQube analysis -->
+    <sonar:sonar />
+</target>
+</project>
