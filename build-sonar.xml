@@ -13,7 +13,7 @@
 <property name="sonar.language" value="java" />
 <property name="sonar.sources" value="src" />
 <property name="sonar.binaries" value="${basedir}/build/" />
-<property name="sonar.server" value="http://172.22.73.136:9000"/>
+<property name="sonar.host.url" value="http://172.22.73.136:9000"/>
  
 <!-- Define the SonarQube target -->
 <target name="sonar">
