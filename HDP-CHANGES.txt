@@ -14,6 +14,8 @@ ZOOKEEPER-1575 adding .gitattributes to prevent CRLF and LF mismatches for sourc
 ZOOKEEPER-1888 ZkCli.cmd commands fail with "'java' is not recognized as an internal or external command" (Ivan Mitic via michim)
 ZOOKEEPER-1791 ZooKeeper package includes unnecessary jars that are part of the package. (mahadev)
 ZOOKEEPER-1506 Re-try DNS hostname -> IP resolution if node connection fails
+ZOOKEEPER-1952 Default log directory and file name can be changed
+ZOOKEEPER-706 large numbers of watches can cause session re-establishment to fail (Chris Thunes)
 
 Other fixes:
 Various build changes related to Hortonworks build infrastructure and Windows build/install support
