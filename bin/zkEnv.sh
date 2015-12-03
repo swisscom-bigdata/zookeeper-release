@@ -63,7 +63,7 @@ fi
 
 if [ "x${ZOO_LOG4J_PROP}" = "x" ]
 then
-    ZOO_LOG4J_PROP="INFO,CONSOLE"
+    ZOO_LOG4J_PROP="INFO,ROLLINGFILE"
 fi
 
 if [ "$JAVA_HOME" != "" ]; then
