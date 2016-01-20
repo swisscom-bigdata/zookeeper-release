@@ -20,9 +20,6 @@ package org.apache.zookeeper.server.persistence;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -84,17 +81,13 @@ public class FileTxnSnapLog {
         this.dataDir = new File(dataDir, version + VERSION);
         this.snapDir = new File(snapDir, version + VERSION);
         if (!this.dataDir.exists()) {
-            Path dataPath = FileSystems.getDefault().getPath(dataDir.getPath(), version + VERSION);
-            Files.createDirectories(dataPath);
-            if (!this.dataDir.exists()) {
+            if (!this.dataDir.mkdirs()) {
                 throw new IOException("Unable to create data directory "
                         + this.dataDir);
             }
         }
         if (!this.snapDir.exists()) {
-            Path snapPath = FileSystems.getDefault().getPath(snapDir.getPath(), version + VERSION);
-            Files.createDirectories(snapPath);
-            if (!this.snapDir.exists()) {
+            if (!this.snapDir.mkdirs()) {
                 throw new IOException("Unable to create snap directory "
                         + this.snapDir);
             }
