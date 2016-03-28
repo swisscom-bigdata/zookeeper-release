@@ -1,6 +1,7 @@
 Backward compatible changes:
 
 BUGFIXES:
+  ZOOKEEPER-2141. ACL cache in DataTree never removes entries (Adam Milne-Smith via camille)
 
   ZOOKEEPER-1888. ZkCli.cmd commands fail with "'java' is not recognized as an
   internal or external command" (Ivan Mitic via michim)
@@ -903,7 +904,7 @@ BUGFIXES:
   digits in node name given certain Locales. (Mark Miller via phunt)
 
   ZOOKEEPER-1212. zkServer.sh stop action is not conformat with LSB
-  para 20.2 Init Script Actions (Roman Shaposhnik via phunt)
+  para 20.2 Init Script Actions (Roman Shaposhnik via phunt)
 
   ZOOKEEPER-1190. ant package is not including many of the bin scripts
   in the package (zkServer.sh for example) (Eric Yang via phunt)
