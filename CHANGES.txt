@@ -3,6 +3,9 @@ Backward compatible changes:
 BUGFIXES:
   ZOOKEEPER-2141. ACL cache in DataTree never removes entries (Adam Milne-Smith via camille)
 
+  ZOOKEEPER-2423: Upgrade Netty version due to security vulnerability
+  (CVE-2014-3488) (Michael Han via phunt)
+
   ZOOKEEPER-1888. ZkCli.cmd commands fail with "'java' is not recognized as an
   internal or external command" (Ivan Mitic via michim)
 
