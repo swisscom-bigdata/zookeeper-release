@@ -232,7 +232,7 @@ public class Login {
                             } catch (LoginException le) {
                                 if (retry > 0) {
                                     --retry;
-                                    LOG.warn("Could not refresh TGT for principal: {}. Will retry.", principal, le);
+                                    LOG.warn("Could not refresh TGT for principal: " + principal + ". Will retry.", le);
                                     // sleep for 10 seconds.
                                     try {
                                         Thread.sleep(10 * 1000);
