@@ -15,6 +15,7 @@ ZOOKEEPER-1888 ZkCli.cmd commands fail with "'java' is not recognized as an inte
 ZOOKEEPER-1791 ZooKeeper package includes unnecessary jars that are part of the package. (mahadev)
 ZOOKEEPER-1506 Re-try DNS hostname -> IP resolution if node connection fails
 ZOOKEEPER-1952 Default log directory and file name can be changed
+ZOOKEEPER-2146 BinaryInputArchive readString should check length before allocating memory (Hongchao Deng)
 
 Other fixes:
 Various build changes related to Hortonworks build infrastructure and Windows build/install support
