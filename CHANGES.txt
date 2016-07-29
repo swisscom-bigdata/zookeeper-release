@@ -10,6 +10,9 @@ BUGFIXES:
 
   Fix command handling in the C client shell (phunt via fpj)
 
+  ZOOKEEPER-1256: ClientPortBindTest is failing on Mac OS X
+  (Camille via phunt)
+
 IMPROVEMENTS:
 
   ZOOKEEPER-1575. adding .gitattributes to prevent CRLF and LF mismatches for
