@@ -62,11 +62,16 @@ public class ClientPortBindTest extends ZKTestCase implements Watcher {
             try {
                 if (i.isLoopback()) {
                     Enumeration<InetAddress> addrs = i.getInetAddresses();
-                    if (addrs.hasMoreElements()) {
-                        bindAddress = addrs.nextElement().getHostAddress();
+                    while (addrs.hasMoreElements()) {
+                      InetAddress a = addrs.nextElement();
+                      if(a.isLoopbackAddress()) {
+                        bindAddress = a.getHostAddress();
+                        break;
+                      }
                     }
                 }
             } catch (SocketException se) {
+              LOG.warn("Couldn't find  loopback interface: " + se.getMessage());
             }
         }
         if (bindAddress == null) {
