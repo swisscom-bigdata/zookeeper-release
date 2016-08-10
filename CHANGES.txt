@@ -5,6 +5,8 @@ BUGFIXES:
   ZOOKEEPER-1888. ZkCli.cmd commands fail with "'java' is not recognized as an
   internal or external command" (Ivan Mitic via michim)
 
+  Fix command handling in the C client shell (phunt via fpj)
+
 IMPROVEMENTS:
 
   ZOOKEEPER-1575. adding .gitattributes to prevent CRLF and LF mismatches for

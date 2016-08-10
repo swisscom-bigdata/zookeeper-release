@@ -18,6 +18,7 @@ ZOOKEEPER-1952 Default log directory and file name can be changed
 ZOOKEEPER-706 large numbers of watches can cause session re-establishment to fail (Chris Thunes)
 ZOOKEEPER-1576 Zookeeper cluster - failed to connect to cluster if one of the
       provided IPs causes java.net.UnknownHostException (Edward Ribeiro via camille)
+(No JIRA?) CVE-2016-5017: Buffer overflow vulnerability in ZooKeeper C cli shell
 
 Other fixes:
 Various build changes related to Hortonworks build infrastructure and Windows build/install support
