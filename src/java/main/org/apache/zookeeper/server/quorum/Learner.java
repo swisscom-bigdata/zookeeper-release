@@ -550,4 +550,8 @@ public class Learner {
             zk.shutdown();
         }
     }
+
+    boolean isRunning() {
+        return self.isRunning() && zk.isRunning();
+    }
 }

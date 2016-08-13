@@ -174,6 +174,7 @@ public class QuorumPeerTestBase extends ZKTestCase implements Watcher {
             ClientBase.recursiveDelete(main.quorumPeer.getTxnFactory()
                     .getDataDir());
         }
+
         public void deleteBaseDir() {
             ClientBase.recursiveDelete(baseDir);
         }
@@ -197,5 +198,10 @@ public class QuorumPeerTestBase extends ZKTestCase implements Watcher {
         public File getConfFile() {
             return confFile;
         }
+
+        public QuorumPeer getQuorumPeer() {
+            return main.quorumPeer;
+        }
+
     }
 }
