@@ -81,12 +81,12 @@ public class FileTxnSnapLog {
         this.dataDir = new File(dataDir, version + VERSION);
         this.snapDir = new File(snapDir, version + VERSION);
         if (!this.dataDir.exists()) {
-            if (!this.dataDir.mkdirs()) {
+            if (!this.dataDir.mkdirs() && !this.dataDir.exists()) {
                 throw new IOException("Unable to create data directory "
                         + this.dataDir);
             }
         }
-        if (!this.snapDir.exists()) {
+        if (!this.snapDir.exists() && !this.snapDir.exists()) {
             if (!this.snapDir.mkdirs()) {
                 throw new IOException("Unable to create snap directory "
                         + this.snapDir);
