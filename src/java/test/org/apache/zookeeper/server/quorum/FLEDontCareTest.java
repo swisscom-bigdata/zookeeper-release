@@ -91,7 +91,7 @@ public class FLEDontCareTest {
 
     @Test
     public void testDontCare() {
-        MockFLE fle = new MockFLE(peer, new QuorumCnxManager(peer));
+        MockFLE fle = new MockFLE(peer, peer.createCnxnManager());
 
         HashMap<Long, Vote> votes = new HashMap<Long, Vote>();
         votes.put(0L, new Vote(0x1, 4L, ZxidUtils.makeZxid(1, 1), 1, 2, ServerState.FOLLOWING));
@@ -105,7 +105,7 @@ public class FLEDontCareTest {
 
     @Test
     public void testDontCareVersion() {
-        MockFLE fle = new MockFLE(peer, new QuorumCnxManager(peer));
+        MockFLE fle = new MockFLE(peer, peer.createCnxnManager());
 
         HashMap<Long, Vote> votes = new HashMap<Long, Vote>();
         votes.put(0L, new Vote(0x1, 4L, ZxidUtils.makeZxid(1, 1), 1, 1, ServerState.FOLLOWING));
@@ -119,7 +119,7 @@ public class FLEDontCareTest {
 
     @Test
     public void testLookingNormal() {
-        MockFLE fle = new MockFLE(peer, new QuorumCnxManager(peer));
+        MockFLE fle = new MockFLE(peer, peer.createCnxnManager());
 
         HashMap<Long, Vote> votes = new HashMap<Long, Vote>();
         votes.put(0L, new Vote(4L, ZxidUtils.makeZxid(2, 1), 1, 1, ServerState.LOOKING));
@@ -133,7 +133,7 @@ public class FLEDontCareTest {
 
     @Test
     public void testLookingDiffRounds() {
-        MockFLE fle = new MockFLE(peer, new QuorumCnxManager(peer));
+        MockFLE fle = new MockFLE(peer, peer.createCnxnManager());
 
         HashMap<Long, Vote> votes = new HashMap<Long, Vote>();
         votes.put(0L, new Vote(4L, ZxidUtils.makeZxid(1, 1), 1, 1, ServerState.LOOKING));
@@ -189,7 +189,7 @@ public class FLEDontCareTest {
 
     @Test
     public void testOutofElection() {
-        MockFLE fle = new MockFLE(peer, new QuorumCnxManager(peer));
+        MockFLE fle = new MockFLE(peer, peer.createCnxnManager());
         HashMap<Long,Vote> outofelection = new HashMap<Long,Vote>();
 
         /*
