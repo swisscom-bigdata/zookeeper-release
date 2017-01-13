@@ -24,6 +24,7 @@ import java.io.File;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.Enumeration;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -58,11 +59,14 @@ public class ClientPortBindTest extends ZKTestCase implements Watcher {
         // if we have a loopback and it has an address use it
         while(intfs.hasMoreElements()) {
             NetworkInterface i = intfs.nextElement();
-            if (i.isLoopback()) {
-                Enumeration<InetAddress> addrs = i.getInetAddresses();
-                if (addrs.hasMoreElements()) {
-                    bindAddress = addrs.nextElement().getHostAddress();
+            try {
+                if (i.isLoopback()) {
+                    Enumeration<InetAddress> addrs = i.getInetAddresses();
+                    if (addrs.hasMoreElements()) {
+                        bindAddress = addrs.nextElement().getHostAddress();
+                    }
                 }
+            } catch (SocketException se) {
             }
         }
         if (bindAddress == null) {
