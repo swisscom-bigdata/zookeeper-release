@@ -26,3 +26,6 @@ Various build changes related to Hortonworks build infrastructure and Windows bu
 
 For HDP-2.5:
  BUG-74089 - ZOOKEEPER-2227: stmk four-letter word fails execution at server while reading trace mask argument (Chris Nauroth via rgs)
+
+For HDP-2.6:
+ ZOOKEEPER-2141 ACL cache in DataTree never removes entries
