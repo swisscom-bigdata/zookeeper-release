@@ -966,6 +966,8 @@ public class ClientCnxn {
         private boolean saslLoginFailed = false;
 
         private void startConnect() throws IOException {
+            // initializing it for new connection
+            saslLoginFailed = false;
             state = States.CONNECTING;
 
             InetSocketAddress addr;
