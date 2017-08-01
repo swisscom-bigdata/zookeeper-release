@@ -36,6 +36,8 @@ import java.util.NoSuchElementException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.zookeeper.AsyncCallback.DataCallback;
+import org.apache.zookeeper.AsyncCallback.StringCallback;
+import org.apache.zookeeper.ZKUtil;
 import org.apache.zookeeper.ZooDefs.Ids;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Id;
@@ -198,7 +200,10 @@ public class ZooKeeperMain {
                         options.put("timeout", it.next());
                     } else if (opt.equals("-r")) {
                         options.put("readonly", "true");
+                    } else if (opt.equals("-R")) {
+                        options.put("recursive", "true");
                     }
+
                 } catch (NoSuchElementException e){
                     System.err.println("Error: no argument found for option "
                             + opt);
@@ -719,9 +724,20 @@ public class ZooKeeperMain {
             System.out.println(new String(data));
             printStat(stat);
         } else if (cmd.equals("ls") && args.length >= 2) {
+            boolean recursive = cl.getOption("recursive") != null;
             path = args[1];
-            List<String> children = zk.getChildren(path, watch);
-            System.out.println(children);
+            if (recursive) {
+                ZKUtil.visitSubTreeDFS(zk, path, watch, new StringCallback() {
+                    @Override
+                    public void processResult(int rc, String path, Object ctx, String name) {
+                        System.out.println(path);
+                    }
+                });
+            } else {
+                List<String> children = zk.getChildren(path, watch);
+                System.out.println(children);
+
+            }
         } else if (cmd.equals("ls2") && args.length >= 2) {
             path = args[1];
             List<String> children = zk.getChildren(path, watch, stat);
