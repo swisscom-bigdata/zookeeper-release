@@ -3,7 +3,6 @@
 .project
 .revision/
 .settings/
-.idea/
 build/
 src/c/generated/
 src/java/generated/

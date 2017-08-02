@@ -22,19 +22,14 @@ import static org.junit.Assert.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.zookeeper.AsyncCallback.StringCallback;
 import org.apache.zookeeper.AsyncCallback.VoidCallback;
-import org.apache.zookeeper.KeeperException.Code;
 import org.apache.zookeeper.ZooDefs.Ids;
 import org.apache.zookeeper.test.ClientBase;
 import org.junit.Assert;
 import org.junit.Test;
-
 
 /**
  * 
@@ -205,59 +200,5 @@ public class ZooKeeperTest extends ClientBase {
                 fail("CLI commands (history, redo, connect, printwatches) display usage info!");
             }
     }
-
-
-    private List<String> createAndLsRecusively(List<String> expected, String startNode) 
-    		throws IOException, InterruptedException, KeeperException {
-    	final ZooKeeper zk = createClient();
-    	for (String s : expected) {
-            zk.create(s, s.getBytes(), Ids.OPEN_ACL_UNSAFE,
-                    CreateMode.PERSISTENT);    		
-    	}
-        final List<String> actual = new ArrayList<String>();
-        ZKUtil.visitSubTreeDFS(zk, startNode, false, new StringCallback() {
-            @Override
-            public void processResult(int rc, String path, Object ctx, String name) {
-                System.out.println(path);
-                actual.add(path);
-            }
-        });
-        return actual;
-    }
-
-    @Test
-    public void testLsrCommand() throws Exception {
-    	List<String> expected = Arrays.asList("/a", "/a/b", "/a/c", "/a/f", "/a/b/d", "/a/c/e");
-        Assert.assertEquals("test ls -R /a", expected, createAndLsRecusively(expected, "/a"));
-    }
-
-    
-    @Test
-    public void testLsrRootCommand() throws Exception {
-        List<String> expected = Arrays.asList("/", "/zookeeper", "/zookeeper/quota");
-        List<String> empty = new ArrayList<String>();
-        Assert.assertEquals("test ls -R /", expected, createAndLsRecusively(empty, "/"));
-    }
-
-    @Test
-    public void testLsrLeafCommand() throws Exception {
-    	List<String> create = Arrays.asList("/b", "/b/c");
-    	List<String> expected = Arrays.asList("/b/c");
-        Assert.assertEquals("ls -R /b/c", expected, createAndLsRecusively(create, "/b/c"));
-    } 
-
-
-    @Test
-    public void testLsrNonexistantZnodeCommand() throws Exception {
-    	List<String> create = Arrays.asList("/b", "/b/c");
-        try {
-            createAndLsRecusively(create, "/b/c/d");
-            Assert.fail("Path doesn't exists so, command should fail.");
-        } catch (Exception e) {
-            //Assert.assertEquals(KeeperException.Code.NONODE, ((KeeperException)e.getCause()).code());
-        	Assert.assertTrue(e instanceof KeeperException 
-        			&& ((KeeperException)e).getCode() == KeeperException.Code.NONODE.intValue());
-        }
-    } 
 
 }
