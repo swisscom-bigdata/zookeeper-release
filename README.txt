@@ -35,3 +35,4 @@ are deployed to the Apache Maven repository after the release has been accepted
 by Apache:
   http://people.apache.org/repo/m2-ibiblio-rsync-repository/
 Patch Upgrade - Wed Nov 15 10:28:10 UTC 2017
+Patch Upgrade - Sat Nov 25 14:55:59 UTC 2017
