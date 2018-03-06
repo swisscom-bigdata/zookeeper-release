@@ -3,6 +3,9 @@ Champlain (HDP-2.2) is based on Apache ZooKeeper 3.4.6 (601207e)
 Following are the changes on top of Apache ZooKeeper 3.4.6
 
 Bug fixes:
+ZOOKEEPER-1256: ClientPortBindTest is failing on Mac OS X
+ZOOKEEPER-2726 ZOOKEEPER-2693: Patch for introduces potential race condition
+ZOOKEEPER-2693: DOS attack on wchp/wchc four letter words (4lw)
 ZOOKEEPER-2146 BinaryInputArchive readString should check length before allocating memory
 ZOOKEEPER-2141 ACL cache in DataTree never removes entries (Adam Milne-Smith via camille)
 ZOOKEEPER-1897 ZK Shell/Cli not processing commands (stack via michim)
