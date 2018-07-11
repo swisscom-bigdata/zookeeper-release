@@ -154,6 +154,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
             DataTreeBuilder treeBuilder, ZKDatabase zkDb) {
         serverStats = new ServerStats(this);
         this.txnLogFactory = txnLogFactory;
+        this.txnLogFactory.setServerStats(this.serverStats);
         this.zkDb = zkDb;
         this.tickTime = tickTime;
         this.minSessionTimeout = minSessionTimeout;
@@ -784,6 +785,13 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
     
     public FileTxnSnapLog getTxnLogFactory() {
         return this.txnLogFactory;
+    }
+
+    /**
+     * Returns the elapsed sync of time of transaction log in milliseconds.
+     */
+    public long getTxnLogElapsedSyncTime() {
+        return txnLogFactory.getTxnLogElapsedSyncTime();
     }
 
     public String getState() {

@@ -40,6 +40,7 @@ import org.apache.jute.BinaryOutputArchive;
 import org.apache.jute.InputArchive;
 import org.apache.jute.OutputArchive;
 import org.apache.jute.Record;
+import org.apache.zookeeper.server.ServerStats;
 import org.apache.zookeeper.server.util.SerializeUtils;
 import org.apache.zookeeper.txn.TxnHeader;
 import org.slf4j.Logger;
@@ -127,6 +128,10 @@ public class FileTxnLog implements TxnLog {
     long currentSize;
     File logFileWrite = null;
 
+    private volatile long syncElapsedMS = -1L;
+
+    private ServerStats serverStats;
+
     /**
      * constructor for FileTxnLog. Take the directory
      * where the txnlogs are stored
@@ -144,6 +149,15 @@ public class FileTxnLog implements TxnLog {
     public static void setPreallocSize(long size) {
         preAllocSize = size;
     }
+
+    /**
+     * Setter for ServerStats to monitor fsync threshold exceed
+     * @param serverStats used to update fsyncThresholdExceedCount
+     */
+     @Override
+     public void setServerStats(ServerStats serverStats) {
+         this.serverStats = serverStats;
+     }
 
     /**
      * creates a checksum alogrithm to be used
@@ -314,7 +328,7 @@ public class FileTxnLog implements TxnLog {
     }
 
     /**
-     * commit the logs. make sure that evertyhing hits the
+     * commit the logs. make sure that everything hits the
      * disk
      */
     public synchronized void commit() throws IOException {
@@ -328,9 +342,11 @@ public class FileTxnLog implements TxnLog {
 
                 log.getChannel().force(false);
 
-                long syncElapsedMS =
-                    TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startSyncNS);
+                syncElapsedMS = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startSyncNS);
                 if (syncElapsedMS > fsyncWarningThresholdMS) {
+                    if(serverStats != null) {
+                        serverStats.incrementFsyncThresholdExceedCount();
+                    }
                     LOG.warn("fsync-ing the write ahead log in "
                             + Thread.currentThread().getName()
                             + " took " + syncElapsedMS
@@ -342,6 +358,14 @@ public class FileTxnLog implements TxnLog {
         while (streamsToFlush.size() > 1) {
             streamsToFlush.removeFirst().close();
         }
+    }
+
+    /**
+     *
+     * @return elapsed sync time of transaction log in miliseconds
+     */
+    public long getTxnLogSyncElapsedTime() {
+        return syncElapsedMS;
     }
 
     /**

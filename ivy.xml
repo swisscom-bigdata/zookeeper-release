@@ -100,6 +100,7 @@
                 conf="test->default"/>
     <dependency org="org.apache.kerby" name="kerby-asn1" rev="1.0.0-RC2"
                 conf="test->default"/>
+    <dependency org="org.hamcrest" name="hamcrest-all" rev="${hamcrest.version}" conf="test->default" />
   </dependencies>
 
 </ivy-module>
