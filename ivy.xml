@@ -72,6 +72,7 @@
                 rev="2.4" conf="releaseaudit->default"/>
     <dependency org="commons-collections" name="commons-collections" 
                 rev="3.1" conf="releaseaudit->default"/>
+    <dependency org="org.hamcrest" name="hamcrest-all" rev="${hamcrest.version}" conf="test->default" />
   </dependencies>
 
 </ivy-module>
