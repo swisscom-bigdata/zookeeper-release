@@ -1,3 +1,8 @@
+HDP-3.0.1
+
+ZOOKEEPER-2662 - Export a metric for txn log sync times
+ZOOKEEPER-3019 - Add a metric to track number of slow fsyncs
+
 Champlain (HDP-2.2) is based on Apache ZooKeeper 3.4.6 (601207e)
 
 Following are the changes on top of Apache ZooKeeper 3.4.6
