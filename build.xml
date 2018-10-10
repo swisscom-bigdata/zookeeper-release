@@ -647,7 +647,7 @@
     <!--                                                                    -->
     <!-- ================================================================== -->
     <target name="package" 
-            depends="jar,src-jar,javadoc-jar,test-jar,api-report,create-cppunit-configure,compile-test"
+            depends="jar,src-jar,javadoc-jar,test-jar,api-report,compile-test"
             description="Build distribution">
       <mkdir dir="${dist.dir}"/>
       <mkdir dir="${dist.dir}/lib"/>
@@ -732,7 +732,7 @@
     </target>
 
     <target name="bin-package"
-            depends="jar,src-jar,javadoc-jar,test-jar,api-report,create-cppunit-configure,compile-test"
+            depends="jar,src-jar,javadoc-jar,test-jar,api-report,compile-test"
             description="Build binary distribution">
       <delete dir="${dist.dir}"/>
       <mkdir dir="${dist.dir}"/>
@@ -1021,7 +1021,7 @@
       </macro_zip>
     </target>
 
-    <target name="package-native" depends="compile-native, bin-package" description="Make C binding tarball">
+    <target name="package-native" depends="create-cppunit-configure, compile-native, bin-package" description="Make C binding tarball">
       <!-- For Unix platforms only, use OS native tar to preserve symlinks -->
       <exec executable="tar" dir="${build.dir}/c/build">
         <arg value="cfzv" />
