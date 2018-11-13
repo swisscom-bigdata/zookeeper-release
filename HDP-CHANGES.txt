@@ -1,3 +1,7 @@
+HDP-3.0.3
+
+BUG-112409 Remove create-cppunit-configure from depends on package/bin-package
+
 HDP-3.0.1
 
 ZOOKEEPER-2662 - Export a metric for txn log sync times
