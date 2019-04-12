@@ -34,4 +34,5 @@ For HDP-2.6:
  ZOOKEEPER-1901 [JDK8] Sort children for comparison in AsyncOps tests
  ZOOKEEPER-1256 ClientPortBindTest is failing on Mac OS X
  ZOOKEEPER-2693 DOS attack on wchp/wchc four letter words (4lw)
- ZOOKEEPER-2726 Patch for introduces potential race condition
+ ZOOKEEPER-2726 Patch for introduces potential race condition 
+ BUG-119508 - ZOOKEEPER-1392 Request READ or ADMIN permission for getAcl()
