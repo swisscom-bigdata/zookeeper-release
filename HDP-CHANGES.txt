@@ -1,3 +1,7 @@
+HDP-3.1.1
+
+BUG-119509 ZOOKEEPER-1392: Request READ or ADMIN permission for getAcl()
+
 HDP-3.0.3
 
 BUG-112409 Remove create-cppunit-configure from depends on package/bin-package
