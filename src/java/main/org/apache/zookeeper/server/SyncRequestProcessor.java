@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  *             be null. This change the semantic of txnlog on the observer
  *             since it only contains committed txns.
  */
-public class SyncRequestProcessor extends ZooKeeperCriticalThread implements RequestProcessor {
+public class SyncRequestProcessor extends Thread implements RequestProcessor {
     private static final Logger LOG = LoggerFactory.getLogger(SyncRequestProcessor.class);
     private final ZooKeeperServer zks;
     private final LinkedBlockingQueue<Request> queuedRequests =
@@ -147,7 +147,7 @@ public class SyncRequestProcessor extends ZooKeeperCriticalThread implements Req
                             if (snapInProcess != null && snapInProcess.isAlive()) {
                                 LOG.warn("Too busy to snap, skipping");
                             } else {
-                                snapInProcess = new ZooKeeperThread("Snapshot Thread") {
+                                snapInProcess = new Thread("Snapshot Thread") {
                                         public void run() {
                                             try {
                                                 zks.takeSnapshot();
@@ -180,7 +180,7 @@ public class SyncRequestProcessor extends ZooKeeperCriticalThread implements Req
                 }
             }
         } catch (Throwable t) {
-            super.handleException(this.getName(), t);
+            LOG.error("Severe unrecoverable error, exiting", t);
             running = false;
             System.exit(11);
         }

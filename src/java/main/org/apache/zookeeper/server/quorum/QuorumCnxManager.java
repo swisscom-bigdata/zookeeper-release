@@ -40,7 +40,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.apache.zookeeper.server.ZooKeeperServer;
-import org.apache.zookeeper.server.ZooKeeperThread;
 
 /**
  * This class implements a connection manager for leader election using TCP. It
@@ -483,15 +482,9 @@ public class QuorumCnxManager {
     /**
      * Thread to listen on some port
      */
-    public class Listener extends ZooKeeperThread {
+    public class Listener extends Thread {
 
         volatile ServerSocket ss = null;
-
-        public Listener() {
-            // During startup of thread, thread name will be overridden to
-            // specific election address
-            super("ListenerThread");
-        }
 
         /**
          * Sleeps on accept().
@@ -566,7 +559,7 @@ public class QuorumCnxManager {
      * soon as there is one available. If connection breaks, then opens a new
      * one.
      */
-    class SendWorker extends ZooKeeperThread {
+    class SendWorker extends Thread {
         Long sid;
         Socket sock;
         RecvWorker recvWorker;
@@ -720,7 +713,7 @@ public class QuorumCnxManager {
      * Thread to receive messages. Instance waits on a socket read. If the
      * channel breaks, then removes itself from the pool of receivers.
      */
-    class RecvWorker extends ZooKeeperThread {
+    class RecvWorker extends Thread {
         Long sid;
         Socket sock;
         volatile boolean running = true;

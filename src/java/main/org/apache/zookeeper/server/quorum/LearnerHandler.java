@@ -39,7 +39,6 @@ import org.apache.zookeeper.KeeperException.SessionExpiredException;
 import org.apache.zookeeper.ZooDefs.OpCode;
 import org.apache.zookeeper.server.ByteBufferInputStream;
 import org.apache.zookeeper.server.Request;
-import org.apache.zookeeper.server.ZooKeeperThread;
 import org.apache.zookeeper.server.ZooTrace;
 import org.apache.zookeeper.server.quorum.Leader.Proposal;
 import org.apache.zookeeper.server.quorum.QuorumPeer.LearnerType;
@@ -54,7 +53,7 @@ import org.slf4j.LoggerFactory;
  * learner. All communication with a learner is handled by this
  * class.
  */
-public class LearnerHandler extends ZooKeeperThread {
+public class LearnerHandler extends Thread {
     private static final Logger LOG = LoggerFactory.getLogger(LearnerHandler.class);
 
     protected final Socket sock;    

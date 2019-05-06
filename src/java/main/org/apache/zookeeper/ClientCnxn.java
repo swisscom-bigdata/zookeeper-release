@@ -74,7 +74,6 @@ import org.apache.zookeeper.proto.SetDataResponse;
 import org.apache.zookeeper.proto.SetWatches;
 import org.apache.zookeeper.proto.WatcherEvent;
 import org.apache.zookeeper.server.ByteBufferInputStream;
-import org.apache.zookeeper.server.ZooKeeperThread;
 import org.apache.zookeeper.server.ZooTrace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -421,6 +420,13 @@ public class ClientCnxn {
 
     private Object eventOfDeath = new Object();
 
+    private final static UncaughtExceptionHandler uncaughtExceptionHandler = new UncaughtExceptionHandler() {
+        @Override
+        public void uncaughtException(Thread t, Throwable e) {
+            LOG.error("from " + t.getName(), e);
+        }
+    };
+
     private static class WatcherSetEventPair {
         private final Set<Watcher> watchers;
         private final WatchedEvent event;
@@ -442,7 +448,7 @@ public class ClientCnxn {
         return name + suffix;
     }
 
-    class EventThread extends ZooKeeperThread {
+    class EventThread extends Thread {
         private final LinkedBlockingQueue<Object> waitingEvents =
             new LinkedBlockingQueue<Object>();
 
@@ -457,6 +463,7 @@ public class ClientCnxn {
 
         EventThread() {
             super(makeThreadName("-EventThread"));
+            setUncaughtExceptionHandler(uncaughtExceptionHandler);
             setDaemon(true);
         }
 
@@ -703,7 +710,7 @@ public class ClientCnxn {
      * This class services the outgoing request queue and generates the heart
      * beats. It also spawns the ReadThread.
      */
-    class SendThread extends ZooKeeperThread {
+    class SendThread extends Thread {
         private long lastPingSentNs;
         private final ClientCnxnSocket clientCnxnSocket;
         private Random r = new Random(System.nanoTime());        
@@ -832,6 +839,7 @@ public class ClientCnxn {
             super(makeThreadName("-SendThread()"));
             state = States.CONNECTING;
             this.clientCnxnSocket = clientCnxnSocket;
+            setUncaughtExceptionHandler(uncaughtExceptionHandler);
             setDaemon(true);
         }
 

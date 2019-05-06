@@ -75,8 +75,7 @@ import org.apache.zookeeper.txn.TxnHeader;
  * outstandingRequests, so that it can take into account transactions that are
  * in the queue to be applied when generating a transaction.
  */
-public class PrepRequestProcessor extends ZooKeeperCriticalThread implements
-        RequestProcessor {
+public class PrepRequestProcessor extends Thread implements RequestProcessor {
     private static final Logger LOG = LoggerFactory.getLogger(PrepRequestProcessor.class);
 
     static boolean skipACL;
