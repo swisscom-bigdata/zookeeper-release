@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.apache.zookeeper.PortAssignment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.zookeeper.CreateMode;
@@ -34,6 +35,7 @@ import org.apache.zookeeper.ZKTestCase;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.ZooDefs.Ids;
 import org.apache.zookeeper.test.ClientBase;
+import org.apache.zookeeper.server.persistence.FileTxnSnapLog;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -133,7 +135,7 @@ public class ZooKeeperServerMainTest extends ZKTestCase implements Watcher {
 
         final int CLIENT_PORT = PortAssignment.unique();
 
-        MainThread main = new MainThread(CLIENT_PORT, true);
+        MainThread main = new MainThread(CLIENT_PORT);
         main.start();
 
         Assert.assertTrue("waiting for server being up",
