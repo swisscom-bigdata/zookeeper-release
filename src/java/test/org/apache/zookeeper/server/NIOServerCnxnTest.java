@@ -87,7 +87,9 @@ public class NIOServerCnxnTest extends ClientBase {
 
     @Test(timeout = 30000)
     public void testValidSelectionKey() throws Exception {
-        final ZooKeeper zk = createZKClient(hostPort, 3000);
+        int oldTimeout = ClientBase.CONNECTION_TIMEOUT;
+        ClientBase.CONNECTION_TIMEOUT = 3000;
+        final ZooKeeper zk = createClient();
         try {
             Iterable<ServerCnxn> connections = serverFactory.getConnections();
             for (ServerCnxn serverCnxn : connections) {
@@ -101,6 +103,7 @@ public class NIOServerCnxnTest extends ClientBase {
             Assert.fail(e.toString());
         } finally {
             zk.close();
+            ClientBase.CONNECTION_TIMEOUT = oldTimeout;
         }
     }
 }
