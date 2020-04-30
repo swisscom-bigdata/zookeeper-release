@@ -32,7 +32,7 @@
 
     <property environment="env"/>
     
-    <property name="version" value="3.4.6" />
+    <property name="version" value="3.4.6.2.6.5.0-292" />
     <property name="final.name" value="${name}-${version}"/>
     <property name="revision.dir" value="${basedir}/.revision" />
     <property name="revision.properties" value="revision.properties" />
@@ -109,7 +109,7 @@
 
     <property name="ivy.version" value="2.2.0"/>
     <property name="ivy.url"
-              value="http://repo2.maven.org/maven2/org/apache/ivy/ivy" />
+              value="https://repo1.maven.org/maven2/org/apache/ivy/ivy" />
     <property name="ivy.home" value="${user.home}/.ant" />
     <property name="ivy.lib" value="${build.dir}/lib"/>
     <property name="ivy.package.lib" value="${build.dir}/package/lib"/>
